@@ -35,15 +35,15 @@ build:
   only:
     - /master/
 
-# build-dev:
-#   stage: build
-#   image: docker:latest
-#   services:
-#     - docker:dind
-#   script:
-#     - docker login -u $DOCKER_USER -p $DOCKER_PASS
+build-dev:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
 
-#     - docker build -f Dockerfile -t $CONOSCO_API_LATEST_IMAGE:dev .
-#     - docker push $CONOSCO_API_LATEST_IMAGE:dev
-#   only:
-#     - /development/
+    - docker build -f Dockerfile -t $CONOSCO_API_LATEST_IMAGE:dev .
+    - docker push $CONOSCO_API_LATEST_IMAGE:dev
+  only:
+    - /development/
