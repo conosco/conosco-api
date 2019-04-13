@@ -1,0 +1,47 @@
+image: node:latest
+
+cache:
+  paths:
+  - node_modules/
+
+stages:
+  - test
+  - build
+  
+variables:
+  CONOSCO_API_LATEST_IMAGE: $CI_REGISTRY_IMAGE/conosco-api
+
+test:
+  image: node
+  stage: test
+  variables:
+    NODE_ENV: test
+  script:
+    - npm install
+    - npm run test
+
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+    - docker build -f Dockerfile -t $CONOSCO_API_LATEST_IMAGE .
+    - docker push $CONOSCO_API_LATEST_IMAGE
+  only:
+    - /master/
+
+# build-dev:
+#   stage: build
+#   image: docker:latest
+#   services:
+#     - docker:dind
+#   script:
+#     - docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+#     - docker build -f Dockerfile -t $CONOSCO_API_LATEST_IMAGE:dev .
+#     - docker push $CONOSCO_API_LATEST_IMAGE:dev
+#   only:
+#     - /development/
