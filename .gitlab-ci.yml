@@ -16,6 +16,7 @@ test:
     - npm install
   script:
     - npm run test
+    - npm run build
 
 cache:
   paths:
@@ -27,7 +28,6 @@ build:
   services:
     - docker:dind
   script:
-    - npm run build
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
 
     - docker build -f Dockerfile -t $CONOSCO_API_LATEST_IMAGE .
