@@ -1,9 +1,5 @@
 image: node:latest
 
-cache:
-  paths:
-  - node_modules/
-
 stages:
   - test
   - build
@@ -16,9 +12,14 @@ test:
   stage: test
   variables:
     NODE_ENV: test
-  script:
+  before_script:
     - npm install
+  script:
     - npm run test
+
+cache:
+  paths:
+  - node_modules/
 
 build:
   stage: build
@@ -26,6 +27,7 @@ build:
   services:
     - docker:dind
   script:
+    - npm run build
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
 
     - docker build -f Dockerfile -t $CONOSCO_API_LATEST_IMAGE .
