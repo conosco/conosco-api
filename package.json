@@ -23,13 +23,23 @@
   "dependencies": {
     "@nestjs/common": "^6.0.0",
     "@nestjs/core": "^6.0.0",
+    "@nestjs/jwt": "^6.0.0",
+    "@nestjs/passport": "^6.0.0",
     "@nestjs/platform-express": "^6.0.0",
+    "@nestjs/swagger": "^3.0.2",
     "@nestjs/typeorm": "^6.0.0",
+    "bcrypt": "^3.0.6",
+    "class-transformer": "^0.2.0",
+    "class-validator": "^0.9.1",
     "custom-env": "^1.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
     "pg": "^7.9.0",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",
+    "swagger-ui-express": "^4.0.2",
     "typeorm": "^0.2.16"
   },
   "devDependencies": {
