@@ -57,5 +57,6 @@ typings/
 # dotenv environment variables file
 .env.development
 .env.production
+.env
 dist
 documentation
