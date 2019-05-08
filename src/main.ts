@@ -12,7 +12,9 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth('Authorization', 'header')
     .build();
+
   app.useGlobalFilters(new HttpErrorFilter());
+
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api/docs', app, document);
 

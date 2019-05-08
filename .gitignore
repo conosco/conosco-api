@@ -58,3 +58,4 @@ typings/
 .env.development
 .env.production
 dist
+documentation

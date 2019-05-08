@@ -26,6 +26,7 @@ export class UserService {
     return await this.userRepository.find();
   }
 
+// {nome: "joao", email: "123@123.com"}
   async create(user: RegisterDTO): Promise<User> {
     return this.userRepository.save(user);
   }
