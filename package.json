@@ -9,7 +9,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "NODE_ENV=development nodemon",
-    "start:debug": "nodemon --config nodemon-debug.json",
+    "start:debug": "NODE_ENV=development nodemon --config nodemon-debug.json",
     "prestart:prod": "NODE_ENV=production rimraf dist && NODE_ENV=production npm run build",
     "start:prod": "NODE_ENV=production node dist/src/main.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",

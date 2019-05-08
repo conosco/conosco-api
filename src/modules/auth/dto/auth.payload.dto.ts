@@ -2,7 +2,16 @@ import { ApiModelProperty } from '@nestjs/swagger';
 
 export class PayloadDTO {
   @ApiModelProperty()
-  username: string;
+  email: string;
+
+  @ApiModelProperty()
+  firstName: string;
+
+  @ApiModelProperty()
+  lastName: string;
+
+  @ApiModelProperty()
+  profilePic: string;
 
   @ApiModelProperty()
   iat?: number;

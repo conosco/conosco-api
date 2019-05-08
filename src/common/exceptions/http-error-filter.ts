@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 
 import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
+import { QueryFailedError } from 'typeorm';
 
 @Catch(HttpException, EntityNotFoundError, Error)
 export class HttpErrorFilter implements ExceptionFilter {
@@ -19,10 +20,12 @@ export class HttpErrorFilter implements ExceptionFilter {
 
     if (exception instanceof EntityNotFoundError) {
       status = HttpStatus.NOT_FOUND;
+    }
+    if (exception instanceof QueryFailedError) {
     } else {
       status = exception.getStatus
         ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+        : HttpStatus.BAD_REQUEST;
     }
 
     const errorResponse = {
@@ -39,7 +42,7 @@ export class HttpErrorFilter implements ExceptionFilter {
     if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
       Logger.error(
         `${request.method} ${request.url}`,
-        exception.stack,
+        exception,
         'ExceptionFilter',
       );
     } else {

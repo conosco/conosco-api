@@ -9,7 +9,7 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 import { HttpErrorFilter } from '../../common/exceptions/http-error-filter';
-import { LoginDTO } from '../auth/dto/auth.login.dto';
+import { LoginDTO } from '../auth/dto/auth.login-email.dto';
 import { PayloadDTO } from '../auth/dto/auth.payload.dto';
 import { RegisterDTO } from '../auth/dto/auth.register.dto';
 
@@ -26,18 +26,12 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-// {nome: "joao", email: "123@123.com"}
   async create(user: RegisterDTO): Promise<User> {
     return this.userRepository.save(user);
   }
 
   async getUserByEmail(email: string): Promise<User> {
     return await this.userRepository.findOneOrFail({ email });
-  }
-
-  async findByPayload(payload: PayloadDTO) {
-    const { username } = payload;
-    return await this.userRepository.findOne({ username });
   }
 
   async findByLogin(userDTO: LoginDTO) {
@@ -51,6 +45,11 @@ export class UserService {
   }
 
   sanitizeUser(user: User) {
-    return { email: user.email };
+    return {
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      profilePic: user.profilePic,
+    };
   }
 }

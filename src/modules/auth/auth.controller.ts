@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Get } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
-import { LoginDTO } from './dto/auth.login.dto';
+import { LoginDTO } from './dto/auth.login-email.dto';
 import { UserService } from '../user/user.service';
 import { ApiUseTags } from '@nestjs/swagger';
 import { User } from '../user/user.entity';
@@ -19,18 +19,24 @@ export class AuthController {
   @Post('login')
   async login(@Body() userDTO: LoginDTO) {
     const user = await this.userService.findByLogin(userDTO);
-    const payload = {
-      username: user.email,
+    const payload: PayloadDTO = {
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      profilePic: user.profilePic,
     };
     const token = await this.authService.signPayload(payload);
-    return { user, token };
+    return { token };
   }
 
   @Post('register')
   async register(@Body() user: RegisterDTO) {
     await this.userService.create(user);
     const payload: PayloadDTO = {
-      username: user.username,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      profilePic: user.profilePic,
     };
     const token = await this.authService.signPayload(payload);
     return { user, token };
