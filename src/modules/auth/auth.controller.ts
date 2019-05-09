@@ -30,6 +30,7 @@ export class AuthController {
       token,
       name: user.firstName,
       email: user.email,
+      picture: user.profilePic,
     };
   }
 
