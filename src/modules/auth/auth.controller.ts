@@ -1,12 +1,12 @@
-import { Body, Controller, Post, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
 import { LoginDTO } from './dto/auth.login-email.dto';
 import { UserService } from '../user/user.service';
 import { ApiUseTags } from '@nestjs/swagger';
-import { User } from '../user/user.entity';
 import { PayloadDTO } from './dto/auth.payload.dto';
 import { RegisterDTO } from './dto/auth.register.dto';
+import { RegisterFacebookDTO } from './dto/auth.register-facebook.dto';
 
 @Controller('auth')
 @ApiUseTags('auth')
@@ -41,4 +41,7 @@ export class AuthController {
     const token = await this.authService.signPayload(payload);
     return { user, token };
   }
+
+  @Post('registerFacebook')
+  async registerFacebook(@Body() token: RegisterFacebookDTO) {}
 }

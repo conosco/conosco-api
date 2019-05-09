@@ -7,16 +7,11 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import * as bcrypt from 'bcrypt';
-import { HttpErrorFilter } from '../../common/exceptions/http-error-filter';
 import { LoginDTO } from '../auth/dto/auth.login-email.dto';
-import { PayloadDTO } from '../auth/dto/auth.payload.dto';
 import { RegisterDTO } from '../auth/dto/auth.register.dto';
 
 @Injectable()
 export class UserService {
-  private saltRounds = 10;
-
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
@@ -26,8 +21,10 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-  async create(user: RegisterDTO): Promise<User> {
-    return this.userRepository.save(user);
+  async create(registerDto: RegisterDTO): Promise<User> {
+    const user = await this.userRepository.create(registerDto);
+    await this.userRepository.save(user);
+    return user;
   }
 
   async getUserByEmail(email: string): Promise<User> {

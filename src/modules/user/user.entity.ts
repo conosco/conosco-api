@@ -5,13 +5,19 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  BeforeInsert,
+  BeforeUpdate,
 } from 'typeorm';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { IsString, IsNumber } from 'class-validator';
 import { Exclude } from 'class-transformer';
+import * as bcrypt from 'bcrypt';
+import { Logger } from '@nestjs/common';
 
 @Entity('user')
 export class User extends BaseEntity {
+  private saltRounds = 10;
+
   @IsNumber()
   @PrimaryGeneratedColumn()
   id: number;
@@ -43,7 +49,7 @@ export class User extends BaseEntity {
 
   @IsString()
   @Exclude()
-  @Column({ type: 'varchar', length: '255', nullable: true })
+  @Column({ type: 'varchar', length: '255', nullable: true, select: false })
   password: string;
 
   @IsString()
@@ -73,4 +79,11 @@ export class User extends BaseEntity {
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt: string;
+
+  @BeforeInsert()
+  async encryptPassword() {
+    if (this.password) {
+      this.password = await bcrypt.hash(this.password, this.saltRounds);
+    }
+  }
 }
