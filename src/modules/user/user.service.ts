@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Connection } from 'typeorm';
+import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { LoginDTO } from '../auth/dto/auth.login-email.dto';
 import { RegisterDTO } from '../auth/dto/auth.register.dto';
@@ -27,23 +27,12 @@ export class UserService {
     return await this.userRepository.findOneOrFail({ email });
   }
 
-  async validateLogin(userDTO: LoginDTO) {
+  async getAuthCredentials(loginDTO: LoginDTO): Promise<LoginDTO> {
     const user = await this.userRepository
       .createQueryBuilder('user')
       .addSelect('user.password')
-      .where('email = :email', { email: userDTO.email })
+      .where('email = :email', { email: loginDTO.email })
       .getOne();
-
-    if (user == null) {
-      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
-    }
-
-    const isValid = await bcrypt.compareSync(userDTO.password, user.password);
-
-    if (await isValid) {
-      return user;
-    } else {
-      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
-    }
+    return user;
   }
 }
