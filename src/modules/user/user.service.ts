@@ -1,14 +1,10 @@
-import {
-  Injectable,
-  NotFoundException,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Connection } from 'typeorm';
 import { User } from './user.entity';
 import { LoginDTO } from '../auth/dto/auth.login-email.dto';
 import { RegisterDTO } from '../auth/dto/auth.register.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -31,22 +27,23 @@ export class UserService {
     return await this.userRepository.findOneOrFail({ email });
   }
 
-  async findByLogin(userDTO: LoginDTO) {
-    const { email, password } = userDTO;
-    const user = await this.userRepository.findOneOrFail({ email });
-    if (password.includes(user.password)) {
-      return this.sanitizeUser(user);
+  async validateLogin(userDTO: LoginDTO) {
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .addSelect('user.password')
+      .where('email = :email', { email: userDTO.email })
+      .getOne();
+
+    if (user == null) {
+      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+    }
+
+    const isValid = await bcrypt.compareSync(userDTO.password, user.password);
+
+    if (await isValid) {
+      return user;
     } else {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
-  }
-
-  sanitizeUser(user: User) {
-    return {
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      profilePic: user.profilePic,
-    };
   }
 }

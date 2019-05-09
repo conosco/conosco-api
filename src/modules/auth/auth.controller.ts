@@ -18,7 +18,7 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() userDTO: LoginDTO) {
-    const user = await this.userService.findByLogin(userDTO);
+    const user = await this.userService.validateLogin(userDTO);
     const payload: PayloadDTO = {
       email: user.email,
       firstName: user.firstName,
@@ -30,8 +30,8 @@ export class AuthController {
   }
 
   @Post('register')
-  async register(@Body() user: RegisterDTO) {
-    await this.userService.create(user);
+  async register(@Body() registerDTO: RegisterDTO) {
+    const user = await this.userService.create(registerDTO);
     const payload: PayloadDTO = {
       email: user.email,
       firstName: user.firstName,
@@ -39,7 +39,7 @@ export class AuthController {
       profilePic: user.profilePic,
     };
     const token = await this.authService.signPayload(payload);
-    return { user, token };
+    return { token };
   }
 
   @Post('registerFacebook')
