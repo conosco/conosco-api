@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { LoginDTO } from '../auth/dto/auth.login-email.dto';
 import { RegisterDTO } from '../auth/dto/auth.register.dto';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -27,7 +26,7 @@ export class UserService {
     return await this.userRepository.findOneOrFail({ email });
   }
 
-  async getAuthCredentials(loginDTO: LoginDTO): Promise<LoginDTO> {
+  async getUserWithPassword(loginDTO: LoginDTO): Promise<User> {
     const user = await this.userRepository
       .createQueryBuilder('user')
       .addSelect('user.password')
