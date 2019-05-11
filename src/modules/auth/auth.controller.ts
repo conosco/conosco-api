@@ -4,6 +4,7 @@ import {
   Post,
   UsePipes,
   ValidationPipe,
+  UseInterceptors,
 } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
@@ -13,9 +14,12 @@ import { ApiUseTags } from '@nestjs/swagger';
 import { PayloadDTO } from './dto/auth.payload.dto';
 import { RegisterDTO } from './dto/auth.register.dto';
 import { RegisterFacebookDTO } from './dto/auth.register-facebook.dto';
+import { ResponseTransformInterceptor } from '@kl/common/pipes/interceptors/response.pipe';
+import { Messages } from '../../consts/messages/messages.portuguese';
 
 @Controller('auth')
 @ApiUseTags('auth')
+@UseInterceptors(ResponseTransformInterceptor)
 export class AuthController {
   constructor(
     private userService: UserService,
@@ -32,12 +36,13 @@ export class AuthController {
       profilePic: user.profilePic,
     };
     const token = await this.authService.signPayload(payload);
-    return {
+    const data = await {
       token,
       name: user.firstName,
       email: user.email,
       picture: user.profilePic,
     };
+    return { data, message: Messages.success.LOGIN_SUCCESS };
   }
 
   @Post('register')
@@ -50,7 +55,8 @@ export class AuthController {
       profilePic: user.profilePic,
     };
     const token = await this.authService.signPayload(payload);
-    return { token };
+    const data = await { token };
+    return { data, message: Messages.success.REGISTER_SUCCESS };
   }
 
   @Post('registerFacebook')

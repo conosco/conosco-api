@@ -8,6 +8,7 @@ export function IsNotBlank(
     registerDecorator({
       name: 'isNotBlank',
       target: object.constructor,
+      // tslint:disable-next-line: object-literal-shorthand
       propertyName: propertyName,
       constraints: [property],
       options: validationOptions,

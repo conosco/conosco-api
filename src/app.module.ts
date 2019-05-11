@@ -16,7 +16,9 @@ import { AuthController } from './modules/auth/auth.controller';
 export class AppModule {
   constructor(private connection: Connection) {
     Logger.log(
+      // tslint:disable-next-line: no-string-literal
       `Database connection initialized at: ${connection.options['host']}:${
+        // tslint:disable-next-line: no-string-literal
         connection.options['port']
       }`,
       'Database',

@@ -4,10 +4,11 @@ import {
   PipeTransform,
   HttpException,
   HttpStatus,
+  BadRequestException,
 } from '@nestjs/common';
-import { validate, IsEmpty } from 'class-validator';
+import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
-import * as validatejs from 'validate.js';
+import { Messages } from '../../../consts/messages/messages.portuguese';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform {
@@ -19,13 +20,14 @@ export class ValidationPipe implements PipeTransform {
     }
 
     const object = plainToClass(metatype, value);
-    const errors = await validate(object, { forbidUnknownValues: true });
 
+    if (object instanceof Object && this.isEmpty(object)) {
+      throw new BadRequestException(Messages.error.EMPTY_BODY);
+    }
+
+    const errors = await validate(object, { forbidUnknownValues: true });
     if (errors.length > 0) {
-      throw new HttpException(
-        { errors: this.formatErrors(errors) },
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new BadRequestException({ errors: this.formatErrors(errors) });
     }
     return value;
   }
@@ -47,15 +49,10 @@ export class ValidationPipe implements PipeTransform {
     return msg;
   }
 
-  private isEmpty(target: any) {
-    if (target.length > 0) {
-      console.log('isempt');
+  private isEmpty(value: any) {
+    if (Object.keys(value).length > 0) {
       return false;
     }
-    if (validatejs.isEmpty(target)) {
-      console.log('isempt');
-      return true;
-    }
-    return { target };
+    return true;
   }
 }

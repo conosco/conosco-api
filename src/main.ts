@@ -1,15 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { HttpErrorFilter } from './common/exceptions/http-error-filter';
-import { ValidationPipe } from './common/pipes/validation.pipe';
+import { ExceptionInterceptor } from './common/pipes/interceptors/exception.pipe';
+import { ValidationPipe } from './common/pipes/validation/validation.pipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api/v1');
 
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalFilters(new HttpErrorFilter());
+  app.useGlobalFilters(new ExceptionInterceptor());
 
   const options = new DocumentBuilder()
     .setTitle('Conosco')
