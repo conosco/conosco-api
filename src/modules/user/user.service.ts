@@ -1,9 +1,10 @@
-import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { LoginDTO } from '../auth/dto/auth.login-email.dto';
 import { RegisterDTO } from '../auth/dto/auth.register.dto';
+import { Messages } from '../../consts/messages/messages.portuguese';
 
 @Injectable()
 export class UserService {
@@ -17,9 +18,13 @@ export class UserService {
   }
 
   async create(registerDto: RegisterDTO): Promise<User> {
-    const user = await this.userRepository.create(registerDto);
-    await this.userRepository.save(user);
-    return user;
+    const data = await this.userRepository.create(registerDto);
+    try {
+      const user = await this.userRepository.save(data);
+      return user;
+    } catch (error) {
+      throw new BadRequestException(Messages.error.USER_ALREADY_EXISTS);
+    }
   }
 
   async getUserByEmail(email: string): Promise<User> {
@@ -30,7 +35,7 @@ export class UserService {
     const user = await this.userRepository
       .createQueryBuilder('user')
       .addSelect('user.password')
-      .where('email = :email', { email: loginDTO.email })
+      .where('user.email = :email', { email: loginDTO.email })
       .getOne();
     return user;
   }

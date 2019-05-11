@@ -1,8 +1,14 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { sign } from 'jsonwebtoken';
 import { UserService } from '../user/user.service';
 import { PayloadDTO } from './dto/auth.payload.dto';
 import { LoginDTO } from './dto/auth.login-email.dto';
+import { Messages } from '../../consts/messages/messages.portuguese';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -23,7 +29,7 @@ export class AuthService {
     const user = await this.userService.getUserWithPassword(loginDTO);
 
     if ((await user) == null) {
-      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+      throw new UnauthorizedException(Messages.error.INVALID_CREDENTIALS);
     }
 
     const isValid = await bcrypt.compareSync(loginDTO.password, user.password);
@@ -31,7 +37,7 @@ export class AuthService {
     if (await isValid) {
       return user;
     } else {
-      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+      throw new UnauthorizedException(Messages.error.INVALID_CREDENTIALS);
     }
   }
 }

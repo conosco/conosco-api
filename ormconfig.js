@@ -1,7 +1,5 @@
 require('custom-env').env(true);
 
-console.log(process.env.DB_TYPE);
-
 module.exports = {
   type: process.env.DB_TYPE,
   host: process.env.DB_HOST,

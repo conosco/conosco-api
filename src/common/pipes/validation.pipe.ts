@@ -5,27 +5,25 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { validate } from 'class-validator';
+import { validate, IsEmpty } from 'class-validator';
 import { plainToClass } from 'class-transformer';
+import * as validatejs from 'validate.js';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform {
   async transform(value: any, metadata: ArgumentMetadata) {
-    if (value instanceof Object && this.isEmpty(value)) {
-      throw new HttpException(
-        'Validation failed: No body submitted',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
     const { metatype } = metadata;
+
     if (!metatype || !this.toValidate(metatype)) {
       return value;
     }
+
     const object = plainToClass(metatype, value);
-    const errors = await validate(object);
+    const errors = await validate(object, { forbidUnknownValues: true });
+
     if (errors.length > 0) {
       throw new HttpException(
-        `Validation failed: ${this.formatErrors(errors)}`,
+        { errors: this.formatErrors(errors) },
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -38,20 +36,26 @@ export class ValidationPipe implements PipeTransform {
   }
 
   private formatErrors(errors: any[]) {
-    return errors
-      .map(err => {
-        // tslint:disable-next-line: forin
-        for (const property in err.constraints) {
-          return err.constraints[property];
-        }
-      })
-      .join(', ');
+    const msg = [];
+    errors.forEach(err => {
+      const target = { property: null, constraints: [] };
+      target.property = err.property;
+      target.constraints.push(err.constraints);
+
+      return msg.push(target);
+    });
+    return msg;
   }
 
-  private isEmpty(value: any) {
-    if (Object.keys(value).length > 0) {
+  private isEmpty(target: any) {
+    if (target.length > 0) {
+      console.log('isempt');
       return false;
     }
-    return true;
+    if (validatejs.isEmpty(target)) {
+      console.log('isempt');
+      return true;
+    }
+    return { target };
   }
 }

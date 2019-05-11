@@ -8,16 +8,13 @@ import {
   BeforeInsert,
   BeforeUpdate,
 } from 'typeorm';
-import { IsString, IsNumber } from 'class-validator';
 import * as bcrypt from 'bcrypt';
 
 @Entity('user')
 export class User extends BaseEntity {
-  @IsNumber()
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsString()
   @Column({
     name: 'first_name',
     type: 'varchar',
@@ -26,7 +23,6 @@ export class User extends BaseEntity {
   })
   firstName: string;
 
-  @IsString()
   @Column({
     name: 'last_name',
     type: 'varchar',
@@ -35,15 +31,12 @@ export class User extends BaseEntity {
   })
   lastName: string;
 
-  @IsString()
   @Column({ type: 'varchar', length: '255', unique: true, nullable: false })
   email: string;
 
-  @IsString()
   @Column({ type: 'varchar', length: '255', nullable: true, select: false })
   password: string;
 
-  @IsString()
   @Column({
     name: 'facebook_token',
     type: 'varchar',
@@ -53,12 +46,10 @@ export class User extends BaseEntity {
   })
   facebookToken: string;
 
-  @IsString()
   @Column({
     name: 'profile_pic',
     type: 'varchar',
     length: '255',
-    unique: true,
     nullable: true,
   })
   profilePic: string;
