@@ -32,7 +32,12 @@ export class AuthController {
       profilePic: user.profilePic,
     };
     const token = await this.authService.signPayload(payload);
-    return { token };
+    return {
+      token,
+      name: user.firstName,
+      email: user.email,
+      picture: user.profilePic,
+    };
   }
 
   @Post('register')
