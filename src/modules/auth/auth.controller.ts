@@ -28,21 +28,8 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() userDTO: LoginDTO) {
-    const user = await this.authService.validateLogin(userDTO);
-    const payload: PayloadDTO = {
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      profilePic: user.profilePic,
-    };
-    const token = await this.authService.signPayload(payload);
-    const data = await {
-      token,
-      name: user.firstName,
-      email: user.email,
-      picture: user.profilePic,
-    };
-    return { data, message: Messages.success.LOGIN_SUCCESS };
+    const token = await this.authService.validateLogin(userDTO);
+    return token;
   }
 
   @Post('register')

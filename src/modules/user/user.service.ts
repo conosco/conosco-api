@@ -1,6 +1,10 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, QueryFailedError } from 'typeorm';
 import { User } from './user.entity';
 import { LoginDTO } from '../auth/dto/auth.login-email.dto';
 import { RegisterDTO } from '../auth/dto/auth.register.dto';
@@ -23,7 +27,7 @@ export class UserService {
       const user = await this.userRepository.save(data);
       return user;
     } catch (error) {
-      throw new BadRequestException(Messages.error.USER_ALREADY_EXISTS);
+      throw new ConflictException(Messages.error.USER_ALREADY_EXISTS);
     }
   }
 

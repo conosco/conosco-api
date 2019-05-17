@@ -35,7 +35,20 @@ export class AuthService {
     const isValid = await bcrypt.compareSync(loginDTO.password, user.password);
 
     if (await isValid) {
-      return user;
+      const payload: PayloadDTO = {
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        profilePic: user.profilePic,
+      };
+      const token = await this.signPayload(payload);
+      const data = await {
+        token,
+        name: user.firstName,
+        email: user.email,
+        picture: user.profilePic,
+      };
+      return { data, message: Messages.success.LOGIN_SUCCESS };
     } else {
       throw new UnauthorizedException(Messages.error.INVALID_CREDENTIALS);
     }

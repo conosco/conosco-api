@@ -3,5 +3,7 @@ export class ResponseDTO<T> {
   statusCode: number;
   path: string;
   method: string;
-  data: T;
+  data: object;
+  error: boolean;
+  message: string;
 }
