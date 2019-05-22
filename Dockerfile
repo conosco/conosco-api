@@ -7,7 +7,7 @@ COPY package.json /usr/src/app/
 RUN npm install
 
 COPY . /usr/src/app
-COPY .env /usr/src/app/
+COPY .env.development /usr/src/app/
 
 EXPOSE 3000
 CMD ["npm", "run", "start:dev"]
