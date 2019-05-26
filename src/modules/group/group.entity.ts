@@ -14,11 +14,14 @@ export class Group extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: '255' })
+  @Column({ name: 'name', type: 'varchar', length: '255' })
   name: string;
 
-  @Column({ type: 'varchar', length: '255' })
+  @Column({ name: 'description', type: 'varchar', length: '255' })
   description: string;
+
+  @Column({ name: 'icon_url', type: 'varchar', length: '255' })
+  iconUrl: string;
 
   @CreateDateColumn({
     name: 'created_at',

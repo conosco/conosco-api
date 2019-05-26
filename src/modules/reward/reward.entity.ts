@@ -20,6 +20,9 @@ export class Reward extends BaseEntity {
   @Column({ type: 'varchar', length: '255' })
   description: string;
 
+  @Column({ name: 'icon_url', type: 'varchar', length: '255' })
+  iconUrl: string;
+
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp with time zone',
@@ -34,6 +37,6 @@ export class Reward extends BaseEntity {
   })
   updatedAt: string;
 
-  @ManyToMany(type => User, user => user.groups)
+  @ManyToMany(type => User, user => user.rewards)
   users: User[];
 }

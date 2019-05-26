@@ -12,6 +12,7 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Group } from '../group/group.entity';
+import { Reward } from '../reward/reward.entity';
 
 @Entity('user')
 export class User extends BaseEntity {
@@ -84,6 +85,20 @@ export class User extends BaseEntity {
     },
   })
   groups: Group[];
+
+  @ManyToMany(type => Reward, reward => reward.users)
+  @JoinTable({
+    name: 'user_reward',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'reward_id',
+      referencedColumnName: 'id',
+    },
+  })
+  rewards: Reward[];
 
   @BeforeInsert()
   @BeforeUpdate()
