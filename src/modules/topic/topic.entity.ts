@@ -13,6 +13,7 @@ import {
 import { User } from '../user/user.entity';
 import { Group } from '../group/group.entity';
 import { Comment } from '../comment/comment.entity';
+import { TopicType } from './topic-type.entity';
 
 @Entity('topic')
 export class Topic extends BaseEntity {
@@ -49,6 +50,10 @@ export class Topic extends BaseEntity {
   @ManyToOne(type => Group, group => group.topics)
   @JoinColumn({ name: 'group_id' })
   group: Group;
+
+  @ManyToOne(type => TopicType, type => type.topics)
+  @JoinColumn({ name: 'topic_type_id' })
+  type: TopicType;
 
   @OneToMany(type => Comment, comment => comment.topic)
   comments: Comment[];
