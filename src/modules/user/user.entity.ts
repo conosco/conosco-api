@@ -9,10 +9,12 @@ import {
   BeforeUpdate,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Group } from '../group/group.entity';
 import { Reward } from '../reward/reward.entity';
+import { Topic } from '../topic/topic.entity';
 
 @Entity('user')
 export class User extends BaseEntity {
@@ -99,6 +101,9 @@ export class User extends BaseEntity {
     },
   })
   rewards: Reward[];
+
+  @OneToMany(type => Topic, topic => topic.user)
+  topics: Topic[];
 
   @BeforeInsert()
   @BeforeUpdate()

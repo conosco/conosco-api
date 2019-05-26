@@ -7,23 +7,24 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import { User } from '../user/user.entity';
-import { Topic } from '../topic/topic.entity';
+import { Group } from '../group/group.entity';
 
-@Entity('group')
-export class Group extends BaseEntity {
+@Entity('topic')
+export class Topic extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'name', type: 'varchar', length: '255' })
-  name: string;
+  @Column({ name: 'title', type: 'varchar', length: '255' })
+  title: string;
 
-  @Column({ name: 'description', type: 'varchar', length: '255' })
-  description: string;
+  @Column({ name: 'text', type: 'text' })
+  text: string;
 
-  @Column({ name: 'icon_url', type: 'varchar', length: '255' })
-  iconUrl: string;
+  @Column({ name: 'image_url', type: 'varchar', length: '255', nullable: true })
+  imageUrl: string;
 
   @CreateDateColumn({
     name: 'created_at',
@@ -39,9 +40,9 @@ export class Group extends BaseEntity {
   })
   updatedAt: string;
 
-  @ManyToMany(type => User, user => user.groups)
-  users: User[];
+  @ManyToOne(type => User, user => user.topics)
+  user: User;
 
-  @OneToMany(type => Topic, topic => topic.group)
-  topics: Topic[];
+  @ManyToOne(type => Group, group => group.topics)
+  group: Group;
 }
