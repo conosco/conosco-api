@@ -7,8 +7,11 @@ import {
   UpdateDateColumn,
   BeforeInsert,
   BeforeUpdate,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Group } from '../group/group.entity';
 
 @Entity('user')
 export class User extends BaseEntity {
@@ -67,6 +70,20 @@ export class User extends BaseEntity {
     select: false,
   })
   updatedAt: string;
+
+  @ManyToMany(type => Group, group => group.users)
+  @JoinTable({
+    name: 'user_group',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'group_id',
+      referencedColumnName: 'id',
+    },
+  })
+  groups: Group[];
 
   @BeforeInsert()
   @BeforeUpdate()

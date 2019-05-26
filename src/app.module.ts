@@ -7,9 +7,10 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AuthService } from './modules/auth/auth.service';
 import { AuthController } from './modules/auth/auth.controller';
+import { GroupModule } from './modules/group/group.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UserModule, AuthModule],
+  imports: [TypeOrmModule.forRoot(), UserModule, AuthModule, GroupModule],
   controllers: [AppController, AuthController],
   providers: [AppService, AuthService],
 })
