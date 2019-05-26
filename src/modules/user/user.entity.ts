@@ -7,8 +7,16 @@ import {
   UpdateDateColumn,
   BeforeInsert,
   BeforeUpdate,
+  ManyToMany,
+  JoinTable,
+  OneToMany,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Group } from '../group/group.entity';
+import { Reward } from '../reward/reward.entity';
+import { Topic } from '../topic/topic.entity';
+import { Comment } from '../comment/comment.entity';
+import { Vote } from '../vote/vote.entity';
 
 @Entity('user')
 export class User extends BaseEntity {
@@ -67,6 +75,43 @@ export class User extends BaseEntity {
     select: false,
   })
   updatedAt: string;
+
+  @ManyToMany(type => Group, group => group.users)
+  @JoinTable({
+    name: 'user_group',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'group_id',
+      referencedColumnName: 'id',
+    },
+  })
+  groups: Group[];
+
+  @ManyToMany(type => Reward, reward => reward.users)
+  @JoinTable({
+    name: 'user_reward',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'reward_id',
+      referencedColumnName: 'id',
+    },
+  })
+  rewards: Reward[];
+
+  @OneToMany(type => Topic, topic => topic.user)
+  topics: Topic[];
+
+  @OneToMany(type => Comment, comment => comment.user)
+  comments: Comment[];
+
+  @OneToMany(type => Vote, vote => vote.user)
+  votes: Vote[];
 
   @BeforeInsert()
   @BeforeUpdate()
