@@ -6,8 +6,11 @@ import {
   ManyToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { User } from '../user/user.entity';
+import { RewardType } from './reward-type.entity';
 
 @Entity('reward')
 export class Reward extends BaseEntity {
@@ -39,4 +42,8 @@ export class Reward extends BaseEntity {
 
   @ManyToMany(type => User, user => user.rewards)
   users: User[];
+
+  @ManyToOne(type => RewardType, type => type.rewards)
+  @JoinColumn({ name: 'reward_type_id' })
+  type: RewardType;
 }
