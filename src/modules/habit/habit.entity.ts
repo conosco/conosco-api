@@ -6,15 +6,11 @@ import {
   ManyToMany,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
-  JoinTable,
 } from 'typeorm';
-import { User } from '../user/user.entity';
-import { Topic } from '../topic/topic.entity';
-import { Habit } from '../habit/habit.entity';
+import { Group } from '../group/group.entity';
 
-@Entity('group')
-export class Group extends BaseEntity {
+@Entity('habit')
+export class Habit extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -41,23 +37,6 @@ export class Group extends BaseEntity {
   })
   updatedAt: string;
 
-  @ManyToMany(type => User, user => user.groups)
-  users: User[];
-
-  @OneToMany(type => Topic, topic => topic.group)
-  topics: Topic[];
-
-  @ManyToMany(type => Habit, habit => habit.groups)
-  @JoinTable({
-    name: 'group_habit',
-    joinColumn: {
-      name: 'group_id',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'habit_id',
-      referencedColumnName: 'id',
-    },
-  })
-  habits: Habit[];
+  @ManyToMany(type => Group, group => group.habits)
+  groups: Group[];
 }
