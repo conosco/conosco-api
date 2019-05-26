@@ -15,6 +15,7 @@ import * as bcrypt from 'bcrypt';
 import { Group } from '../group/group.entity';
 import { Reward } from '../reward/reward.entity';
 import { Topic } from '../topic/topic.entity';
+import { Comment } from '../comment/comment.entity';
 
 @Entity('user')
 export class User extends BaseEntity {
@@ -104,6 +105,9 @@ export class User extends BaseEntity {
 
   @OneToMany(type => Topic, topic => topic.user)
   topics: Topic[];
+
+  @OneToMany(type => Comment, comment => comment.user)
+  comments: Comment[];
 
   @BeforeInsert()
   @BeforeUpdate()

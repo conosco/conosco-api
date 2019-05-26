@@ -8,9 +8,11 @@ import {
   UpdateDateColumn,
   OneToMany,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { User } from '../user/user.entity';
 import { Group } from '../group/group.entity';
+import { Comment } from '../comment/comment.entity';
 
 @Entity('topic')
 export class Topic extends BaseEntity {
@@ -41,8 +43,13 @@ export class Topic extends BaseEntity {
   updatedAt: string;
 
   @ManyToOne(type => User, user => user.topics)
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @ManyToOne(type => Group, group => group.topics)
+  @JoinColumn({ name: 'group_id' })
   group: Group;
+
+  @OneToMany(type => Comment, comment => comment.topic)
+  comments: Comment[];
 }
