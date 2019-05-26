@@ -3,7 +3,6 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToMany,
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
@@ -14,6 +13,7 @@ import { User } from '../user/user.entity';
 import { Group } from '../group/group.entity';
 import { Comment } from '../comment/comment.entity';
 import { TopicType } from './topic-type.entity';
+import { Vote } from '../vote/vote.entity';
 
 @Entity('topic')
 export class Topic extends BaseEntity {
@@ -57,4 +57,7 @@ export class Topic extends BaseEntity {
 
   @OneToMany(type => Comment, comment => comment.topic)
   comments: Comment[];
+
+  @OneToMany(type => Vote, vote => vote.topic)
+  votes: Vote[];
 }

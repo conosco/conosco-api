@@ -16,6 +16,7 @@ import { Group } from '../group/group.entity';
 import { Reward } from '../reward/reward.entity';
 import { Topic } from '../topic/topic.entity';
 import { Comment } from '../comment/comment.entity';
+import { Vote } from '../vote/vote.entity';
 
 @Entity('user')
 export class User extends BaseEntity {
@@ -108,6 +109,9 @@ export class User extends BaseEntity {
 
   @OneToMany(type => Comment, comment => comment.user)
   comments: Comment[];
+
+  @OneToMany(type => Vote, vote => vote.user)
+  votes: Vote[];
 
   @BeforeInsert()
   @BeforeUpdate()
