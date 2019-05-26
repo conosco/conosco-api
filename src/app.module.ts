@@ -8,9 +8,24 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AuthService } from './modules/auth/auth.service';
 import { AuthController } from './modules/auth/auth.controller';
 import { GroupModule } from './modules/group/group.module';
+import { TopicModule } from './modules/topic/topic.module';
+import { CommentModule } from './modules/comment/comment.module';
+import { HabitModule } from './modules/habit/habit.module';
+import { RewardModule } from './modules/reward/reward.module';
+import { VoteModule } from './modules/vote/vote.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UserModule, AuthModule, GroupModule],
+  imports: [
+    TypeOrmModule.forRoot(),
+    UserModule,
+    AuthModule,
+    GroupModule,
+    TopicModule,
+    CommentModule,
+    HabitModule,
+    RewardModule,
+    VoteModule,
+  ],
   controllers: [AppController, AuthController],
   providers: [AppService, AuthService],
 })

@@ -9,8 +9,8 @@ import {
 } from 'typeorm';
 import { User } from '../user/user.entity';
 
-@Entity('group')
-export class Group extends BaseEntity {
+@Entity('reward')
+export class Reward extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
