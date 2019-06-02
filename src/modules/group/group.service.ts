@@ -14,6 +14,10 @@ export class GroupService {
 
     async findAll() {
         const groups = await this.groupRepository.find();
-        return {message: Messages.success.GROUPS_FIND_ALL_SUCESS, data:groups};
+        return { message: Messages.success.GROUPS_FIND_ALL_SUCESS, data: groups };
+    }
+    async findOne(id: number) {
+        const group = await this.groupRepository.findOneOrFail(id);
+        return {message: Messages.success.GROUP_FIND_ONE_SUCESS, data: group};
     }
 }
