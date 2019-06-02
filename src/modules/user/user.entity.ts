@@ -88,7 +88,7 @@ export class User extends BaseEntity {
       referencedColumnName: 'id',
     },
   })
-  groups: Group[];
+  groups:Group[];
 
   @ManyToMany(type => Reward, reward => reward.users)
   @JoinTable({

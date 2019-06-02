@@ -42,7 +42,7 @@ export class Group extends BaseEntity {
   updatedAt: string;
 
   @ManyToMany(type => User, user => user.groups)
-  users: User[];
+  users:User[];
 
   @OneToMany(type => Topic, topic => topic.group)
   topics: Topic[];
