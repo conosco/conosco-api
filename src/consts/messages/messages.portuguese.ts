@@ -9,5 +9,6 @@ export const Messages = {
   success: {
     REGISTER_SUCCESS: 'Cadastro realizado com sucesso!',
     LOGIN_SUCCESS: 'Login realizado com sucesso!',
+    GROUPS_FIND_ALL_SUCESS: 'Grupos encontrados com sucesso!'
   },
 };

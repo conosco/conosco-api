@@ -4,8 +4,8 @@ import { ResponseTransformInterceptor } from "@kl/common/pipes/interceptors/resp
 import { UserService } from "../user/user.service";
 import { GroupService } from "./group.service";
 
-@Controller('group')
-@ApiUseTags('group')
+@Controller('groups')
+@ApiUseTags('groups')
 @UseInterceptors(ResponseTransformInterceptor)
 export class GroupController {
   constructor(
@@ -17,6 +17,6 @@ export class GroupController {
   async findAll() {
       const groups = await this.groupService.findAll();
       await console.log(groups);
-      return await groups;
+      return groups;
   }
 }
