@@ -10,6 +10,7 @@ export const Messages = {
     REGISTER_SUCCESS: 'Cadastro realizado com sucesso!',
     LOGIN_SUCCESS: 'Login realizado com sucesso!',
     GROUPS_FIND_ALL_SUCESS: 'Grupos encontrados com sucesso!',
-    GROUP_FIND_ONE_SUCESS: 'Grupo encontrado com sucesso!'
+    GROUP_FIND_ONE_SUCESS: 'Grupo encontrado com sucesso!',
+    GROUP_SUBSCRIBE_USER_SUCESS: 'Usuário inscrito com sucesso!',
   },
 };
