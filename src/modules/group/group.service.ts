@@ -3,14 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Group } from './group.entity';
 import { Repository } from 'typeorm';
 import { Messages } from '../../consts/messages/messages.portuguese';
-import { MESSAGES } from '@nestjs/core/constants';
-import { JoinDTO } from './dto/group.join.dto';
 import { UserService } from '../user/user.service';
 
 @Injectable()
 export class GroupService {
   constructor(
-    private userService: UserService,
     @InjectRepository(Group)
     private readonly groupRepository: Repository<Group>,
   ) {}
@@ -24,18 +21,35 @@ export class GroupService {
     return { message: Messages.success.GROUP_FIND_ONE_SUCESS, data: group };
   }
 
-  async subscribeUser(id: number, joinDTO: JoinDTO) {
-    const group = await this.groupRepository.findOneOrFail(id);
-    const user = await this.userService.findUserById(joinDTO.userId);
-    group.users = await [user];
-    await group.save();
-    const groupWithUser = await this.groupRepository.find({
-      relations: ['users'],
-      where: { id: user.id },
-    });
+  async subscribeUser(id: number, userId: number) {
+    await this.groupRepository
+      .createQueryBuilder()
+      .relation(Group, 'users')
+      .of(id)
+      .add(userId);
+
+    const group = await this.groupRepository
+      .createQueryBuilder('group')
+      .innerJoinAndSelect('group.users', 'user')
+      .where('group.id = :id', { id })
+      .where('user.id = :userId', { userId })
+      .getOne();
+
     return {
       message: Messages.success.GROUP_SUBSCRIBE_USER_SUCESS,
-      data: groupWithUser,
+      data: group,
+    };
+  }
+
+  async unsubscribeUser(id: number, userId: number) {
+    await this.groupRepository
+      .createQueryBuilder()
+      .relation(Group, 'users')
+      .of(id)
+      .remove(userId);
+
+    return {
+      message: Messages.success.GROUP_UNSUBSCRIBE_USER_SUCESS,
     };
   }
 }
