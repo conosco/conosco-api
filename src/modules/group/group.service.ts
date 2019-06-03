@@ -52,4 +52,17 @@ export class GroupService {
       message: Messages.success.GROUP_UNSUBSCRIBE_USER_SUCESS,
     };
   }
+
+  async findUsers(id: number) {
+    const group = await this.groupRepository
+      .createQueryBuilder('group')
+      .innerJoinAndSelect('group.users', 'user')
+      .where('group.id = :id', { id })
+      .getOne();
+
+    return {
+      message: Messages.success.GROUP_FIND_USERS_SUCESS,
+      data: { group },
+    };
+  }
 }

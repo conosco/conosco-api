@@ -35,6 +35,11 @@ export class GroupController {
     return group;
   }
 
+  @Get(':id/users')
+  async users(@Param('id') id: number) {
+    return this.groupService.findUsers(id);
+  }
+
   @Post(':id/join/:userId')
   async joinGroup(@Param('id') id: number, @Param('userId') userId: number) {
     const groupWithUser = await this.groupService.subscribeUser(id, userId);
