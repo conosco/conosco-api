@@ -22,8 +22,8 @@ export class UserService {
   }
 
   async create(registerDto: RegisterDTO): Promise<User> {
-    const data = await this.userRepository.create(registerDto);
     try {
+      const data = await this.userRepository.create(registerDto);
       const user = await this.userRepository.save(data);
       return user;
     } catch (error) {
@@ -44,7 +44,7 @@ export class UserService {
     return user;
   }
 
-  async findUserById(id:number){
+  async findUserById(id: number) {
     const user = await this.userRepository.findOneOrFail(id);
     return user;
   }

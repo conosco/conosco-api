@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Group } from './group.entity';
 import { Repository } from 'typeorm';
-import { Messages } from '../../consts/messages/messages.portuguese';
-import { UserService } from '../user/user.service';
 
 @Injectable()
 export class GroupService {
@@ -13,12 +15,11 @@ export class GroupService {
   ) {}
 
   async findAll() {
-    const groups = await this.groupRepository.find();
-    return { message: Messages.success.GROUPS_FIND_ALL_SUCESS, data: groups };
+    return this.groupRepository.find();
   }
+
   async findOne(id: number) {
-    const group = await this.groupRepository.findOneOrFail(id);
-    return { message: Messages.success.GROUP_FIND_ONE_SUCESS, data: group };
+    return this.groupRepository.findOneOrFail(id);
   }
 
   async subscribeUser(id: number, userId: number) {
@@ -27,18 +28,12 @@ export class GroupService {
       .relation(Group, 'users')
       .of(id)
       .add(userId);
-
-    const group = await this.groupRepository
+    return this.groupRepository
       .createQueryBuilder('group')
       .innerJoinAndSelect('group.users', 'user')
       .where('group.id = :id', { id })
       .where('user.id = :userId', { userId })
       .getOne();
-
-    return {
-      message: Messages.success.GROUP_SUBSCRIBE_USER_SUCESS,
-      data: group,
-    };
   }
 
   async unsubscribeUser(id: number, userId: number) {
@@ -47,10 +42,7 @@ export class GroupService {
       .relation(Group, 'users')
       .of(id)
       .remove(userId);
-
-    return {
-      message: Messages.success.GROUP_UNSUBSCRIBE_USER_SUCESS,
-    };
+    return null;
   }
 
   async findUsers(id: number) {
@@ -59,10 +51,21 @@ export class GroupService {
       .innerJoinAndSelect('group.users', 'user')
       .where('group.id = :id', { id })
       .getOne();
+    if (!group) {
+      throw new NotFoundException();
+    }
+    return group;
+  }
 
-    return {
-      message: Messages.success.GROUP_FIND_USERS_SUCESS,
-      data: { group },
-    };
+  async findHabits(id: number) {
+      const group = await this.groupRepository
+        .createQueryBuilder('group')
+        .innerJoinAndSelect('group.habits', 'habit')
+        .where('group.id = :id', { id })
+        .getOne();
+      if (!group) {
+        throw new NotFoundException();
+      }
+      return group;
   }
 }
