@@ -19,7 +19,7 @@ export class UserController {
         private userService: UserService,
     ) { }
 
-    @Get('users')
+    @Get('/')
     async getUsers() {
         const users = await this.userService.getUsers();
         return {
@@ -28,7 +28,7 @@ export class UserController {
         };
     }
 
-    @Get('users/:email')
+    @Get('/:email')
     async getUserByEmail(@Param('email') email) {
         const user = await this.userService.getUserByEmail(email);
         console.log(email)
