@@ -2,11 +2,14 @@ import {
     Controller,
     Get,
     UseInterceptors,
+    Body,
+    Param,
 } from '@nestjs/common';
 
 import { UserService } from '../user/user.service';
 import { ApiUseTags } from '@nestjs/swagger';
 import { ResponseTransformInterceptor } from '@kl/common/pipes/interceptors/response.pipe';
+import { UserDTO } from './dto/user.dto';
 
 @Controller('user')
 @ApiUseTags('user')
@@ -16,13 +19,22 @@ export class UserController {
         private userService: UserService,
     ) { }
 
-    @Get('getAllUsers')
+    @Get('users')
     async getUsers() {
         const users = await this.userService.getUsers();
-        // console.log("users = ", users);
         return {
             message: 'Usuários recuperados com sucesso!',
             data: users
+        };
+    }
+
+    @Get('users/:email')
+    async getUserByEmail(@Param('email') email) {
+        const user = await this.userService.getUserByEmail(email);
+        console.log(email)
+        return {
+            message: 'Usuário recuperado com sucesso!',
+            data: user
         };
     }
 }
