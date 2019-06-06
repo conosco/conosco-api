@@ -13,6 +13,7 @@ import { CommentModule } from './modules/comment/comment.module';
 import { HabitModule } from './modules/habit/habit.module';
 import { RewardModule } from './modules/reward/reward.module';
 import { VoteModule } from './modules/vote/vote.module';
+import { UserController } from './modules/user/user.controller';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { VoteModule } from './modules/vote/vote.module';
     RewardModule,
     VoteModule,
   ],
-  controllers: [AppController, AuthController],
+  controllers: [AppController, AuthController, UserController],
   providers: [AppService, AuthService],
 })
 export class AppModule {
