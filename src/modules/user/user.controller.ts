@@ -31,7 +31,7 @@ export class UserController {
     @Get('/:email')
     async getUserByEmail(@Param('email') email) {
         const user = await this.userService.getUserByEmail(email);
-        console.log(email)
+
         return {
             message: 'Usuário recuperado com sucesso!',
             data: user
