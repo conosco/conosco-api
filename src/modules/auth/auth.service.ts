@@ -1,24 +1,20 @@
-import {
-  Injectable,
-  HttpException,
-  HttpStatus,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { sign } from 'jsonwebtoken';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { PayloadDTO } from './dto/auth.payload.dto';
 import { LoginDTO } from './dto/auth.login-email.dto';
 import { Messages } from '../../consts/messages/messages.portuguese';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async signPayload(payload: PayloadDTO) {
-    return sign(payload, process.env.TOKEN_SECRET_KEY, {
-      expiresIn: process.env.TOKEN_EXPIRES_IN,
-    });
+    return this.jwtService.sign(payload);
   }
 
   async validateUser(payload: PayloadDTO) {
@@ -42,13 +38,15 @@ export class AuthService {
         profilePic: user.profilePic,
       };
       const token = await this.signPayload(payload);
-      const data = await {
-        token,
-        name: user.firstName,
-        email: user.email,
-        picture: user.profilePic,
+      return {
+        data: {
+          token,
+          name: user.firstName,
+          email: user.email,
+          picture: user.profilePic,
+        },
+        message: Messages.success.LOGIN_SUCCESS,
       };
-      return { data, message: Messages.success.LOGIN_SUCCESS };
     } else {
       throw new UnauthorizedException(Messages.error.INVALID_CREDENTIALS);
     }

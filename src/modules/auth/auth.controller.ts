@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Post,
-  UsePipes,
-  ValidationPipe,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
 import { LoginDTO } from './dto/auth.login-email.dto';
