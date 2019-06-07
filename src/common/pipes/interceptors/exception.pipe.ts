@@ -51,10 +51,14 @@ export class ExceptionInterceptor implements ExceptionFilter {
     };
 
     Logger.error(
-      `${request.method} ${request.url}`,
+      `${request.method} ${request.url} ${JSON.stringify(
+        errorResponse.message,
+      )}`,
       null,
       'ExceptionHttpFilter',
     );
+
+    Logger.error('Error', exception.stack, 'ExceptionHttpFilter');
 
     return response.status(statusCode).json(errorResponse);
   }

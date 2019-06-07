@@ -1,12 +1,15 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty } from 'class-validator';
+import { Messages } from '@kl/consts/messages/messages.portuguese';
+import { IsNotBlank } from '@kl/common/pipes/validation/is-not-blank.validation';
 
 export class LoginDTO {
   @ApiModelProperty()
-  @IsEmail()
+  @IsEmail({}, { message: Messages.error.INVALID_FORMAT })
+  @IsNotBlank(null, { message: Messages.error.EMPTY_FIELD })
   readonly email: string;
 
   @ApiModelProperty()
-  @IsNotEmpty()
+  @IsNotBlank(null, { message: Messages.error.EMPTY_FIELD })
   readonly password: string;
 }
