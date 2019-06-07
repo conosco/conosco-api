@@ -13,6 +13,7 @@ import { CommentModule } from './modules/comment/comment.module';
 import { HabitModule } from './modules/habit/habit.module';
 import { RewardModule } from './modules/reward/reward.module';
 import { VoteModule } from './modules/vote/vote.module';
+import { UserController } from './modules/user/user.controller';
 import { GroupController } from './modules/group/group.controller';
 
 @Module({
@@ -27,7 +28,7 @@ import { GroupController } from './modules/group/group.controller';
     RewardModule,
     VoteModule,
   ],
-  controllers: [AppController, AuthController, GroupController],
+  controllers: [AppController, AuthController, UserController, GroupController],
   providers: [AppService, AuthService],
 })
 export class AppModule {
