@@ -6,6 +6,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Group } from './group.entity';
 import { Repository } from 'typeorm';
+import { TopicDTO } from './dto/group.topic.dto';
+import { Topic } from '../topic/topic.entity';
 
 @Injectable()
 export class GroupService {
@@ -57,6 +59,18 @@ export class GroupService {
     return group;
   }
 
+  async findTopics(id: number) {
+    const groupWithTopics = await this.groupRepository
+      .createQueryBuilder('group')
+      .innerJoinAndSelect('group.topics', 'topic')
+      .where('group.id = :id', { id })
+      .getOne();
+    if (!groupWithTopics) {
+      throw new NotFoundException();
+    }
+    return groupWithTopics;
+  }
+
   async findHabits(id: number) {
       const group = await this.groupRepository
         .createQueryBuilder('group')
@@ -67,5 +81,8 @@ export class GroupService {
         throw new NotFoundException();
       }
       return group;
+  }
+
+  async createTopic(id: number, topicDTO: TopicDTO) {
   }
 }

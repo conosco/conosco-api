@@ -15,6 +15,7 @@ import { GroupService } from './group.service';
 import { SubscriptionDTO } from './dto/group.subscription.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Messages } from '@kl/consts/messages/messages.portuguese';
+import { TopicDTO } from './dto/group.topic.dto';
 
 @ApiUseTags('groups')
 @ApiBearerAuth()
@@ -54,12 +55,30 @@ export class GroupController {
     };
   }
 
+  @Get(':id/topics')
+  async topics(@Param('id') id: number) {
+    const group = await this.groupService.findTopics(id);
+    return {
+      message: Messages.success.GROUP_FIND_TOPICS_SUCESS,
+      data: group,
+    };
+  }
+
   @Post(':id/join/:userId')
   async joinGroup(@Param('id') id: number, @Param('userId') userId: number) {
     const subscribedUser = this.groupService.subscribeUser(id, userId);
     return {
       message: Messages.success.GROUP_FIND_USERS_SUCESS,
       data: subscribedUser,
+    };
+  }
+
+  @Post(':id/topic')
+  async createTopic(@Param('id') id: number, @Body() topicDTO: TopicDTO) {
+    const topic = await this.groupService.createTopic(id, topicDTO);
+    return {
+      message: Messages.success.GROUP_FIND_USERS_SUCESS,
+      data: topic,
     };
   }
 
