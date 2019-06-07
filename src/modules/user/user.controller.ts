@@ -11,8 +11,8 @@ import { ApiUseTags } from '@nestjs/swagger';
 import { ResponseTransformInterceptor } from '@kl/common/pipes/interceptors/response.pipe';
 import { UserDTO } from './dto/user.dto';
 
-@Controller('user')
-@ApiUseTags('user')
+@Controller('users')
+@ApiUseTags('users')
 @UseInterceptors(ResponseTransformInterceptor)
 export class UserController {
     constructor(
