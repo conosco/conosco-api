@@ -44,7 +44,7 @@ export class Group extends BaseEntity {
   @ManyToMany(type => User, user => user.groups)
   users:User[];
 
-  @OneToMany(type => Topic, topic => topic.group)
+  @OneToMany(() => Topic, (topic: Topic) => topic.group)
   topics: Topic[];
 
   @ManyToMany(type => Habit, habit => habit.groups)

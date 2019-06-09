@@ -8,6 +8,7 @@ import {
   OneToMany,
   ManyToOne,
   JoinColumn,
+  RelationId,
 } from 'typeorm';
 import { User } from '../user/user.entity';
 import { Group } from '../group/group.entity';
@@ -43,21 +44,27 @@ export class Topic extends BaseEntity {
   })
   updatedAt: string;
 
-  @ManyToOne(type => User, user => user.topics)
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+  user: Promise<User>;
+  @Column({name: 'user_id'})
+  userId: number;
 
-  @ManyToOne(type => Group, group => group.topics)
-  @JoinColumn({ name: 'group_id' })
-  group: Group;
+  @ManyToOne(() => Group, (group: Group) => group.topics)
+  @JoinColumn({ name: 'group_id', referencedColumnName: 'id'})
+  group: Promise<Group>;
+  @Column({name: 'group_id'})
+  groupId: number;
 
-  @ManyToOne(type => TopicType, type => type.topics)
-  @JoinColumn({ name: 'topic_type_id' })
-  type: TopicType;
+  @ManyToOne(() => TopicType, (type: TopicType) => type.topics)
+  @JoinColumn({ name: 'topic_type_id', referencedColumnName: 'id' })
+  type: Promise<TopicType>;
+  @Column({name: 'topic_type_id'})
+  topicTypeId: number;
 
-  @OneToMany(type => Comment, comment => comment.topic)
+  @OneToMany(() => Comment, comment => comment.topic)
   comments: Comment[];
 
-  @OneToMany(type => Vote, vote => vote.topic)
+  @OneToMany(() => Vote, vote => vote.topic)
   votes: Vote[];
 }

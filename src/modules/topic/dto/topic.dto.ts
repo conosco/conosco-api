@@ -1,14 +1,11 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import { IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsString, IsOptional } from 'class-validator';
+import { User } from '@kl/modules/user/user.entity';
 
 export class TopicDTO {
   @ApiModelProperty()
   @IsNumber()
   userId: number;
-
-  @ApiModelProperty()
-  @IsNumber()
-  groupId: number;
 
   @ApiModelProperty()
   @IsNumber()
@@ -24,5 +21,9 @@ export class TopicDTO {
 
   @ApiModelProperty()
   @IsString()
-  imgUrl: string;
+  imageUrl: string;
+  
+  @IsNumber()
+  @IsOptional()
+  groupId: number;
 }
