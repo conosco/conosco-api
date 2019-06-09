@@ -36,7 +36,6 @@ export class GroupService {
     .where('group.id = :id', { id })
     .where('user.id = :userId', { userId })
     .getOne();
-      
     return subscribedUser;
   }
 
@@ -50,11 +49,7 @@ export class GroupService {
   }
 
   async findUsers(id: number) {
-    const group = await this.groupRepository
-      .createQueryBuilder('group')
-      .innerJoinAndSelect('group.users', 'user')
-      .where('group.id = :id', { id })
-      .getOne();
+    const group = await this.groupRepository.find({where: {id}, relations: ['users'], select: ['users']});
     if (!group) {
       throw new NotFoundException('Não encontrado.');
     }
@@ -62,11 +57,7 @@ export class GroupService {
   }
 
   async findTopics(id: number) {
-    const groupWithTopics = await this.groupRepository
-      .createQueryBuilder('group')
-      .innerJoinAndSelect('group.topics', 'topic')
-      .where('group.id = :id', { id })
-      .getOne();
+    const groupWithTopics = await this.groupRepository.find({where: {id}, relations: ['topics', 'topics.user', 'topics.type']});
     if (!groupWithTopics) {
       throw new NotFoundException('Não encontrado.');
     }

@@ -44,21 +44,21 @@ export class Topic extends BaseEntity {
   })
   updatedAt: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User,  (user: User) => user.topics)
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-  user: Promise<User>;
+  user: User;
   @Column({name: 'user_id'})
   userId: number;
 
   @ManyToOne(() => Group, (group: Group) => group.topics)
   @JoinColumn({ name: 'group_id', referencedColumnName: 'id'})
-  group: Promise<Group>;
+  group: Group;
   @Column({name: 'group_id'})
   groupId: number;
 
   @ManyToOne(() => TopicType, (type: TopicType) => type.topics)
   @JoinColumn({ name: 'topic_type_id', referencedColumnName: 'id' })
-  type: Promise<TopicType>;
+  type: TopicType;
   @Column({name: 'topic_type_id'})
   topicTypeId: number;
 

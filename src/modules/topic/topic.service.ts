@@ -15,7 +15,7 @@ import { User } from '../user/user.entity';
     ) {}
   
     async findAll(groupId: number) {
-      return this.topicRepository.find({where: {groupId}});
+      return this.topicRepository.find({relations: ['user']});
     }
   
     async findOne(id: number) {
@@ -23,9 +23,6 @@ import { User } from '../user/user.entity';
     }
 
     async createTopic(topicDTO: TopicDTO){
-    console.log(topicDTO);
-    let user = new User();
-    user.id = topicDTO.userId;
     let topic =  await this.topicRepository.create(topicDTO);
     return this.topicRepository.save(topic);
     }
