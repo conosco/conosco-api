@@ -19,12 +19,6 @@ export class AuthController {
     private authService: AuthService,
   ) {}
 
-  @Post('login')
-  async login(@Body() userDTO: LoginDTO) {
-    const token = await this.authService.validateLogin(userDTO);
-    return token;
-  }
-
   @Post('register')
   async register(@Body() registerDTO: RegisterDTO) {
     const user = await this.userService.create(registerDTO);
@@ -41,4 +35,10 @@ export class AuthController {
 
   @Post('registerFacebook')
   async registerFacebook(@Body() token: RegisterFacebookDTO) {}
+
+  @Post('login')
+  async login(@Body() userDTO: LoginDTO) {
+    const token = await this.authService.validateLogin(userDTO);
+    return token;
+  }
 }
