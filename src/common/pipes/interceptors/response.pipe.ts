@@ -26,7 +26,6 @@ export class ResponseTransformInterceptor<T>
     const path = contextRequest.url;
     const error = statusCode < 200 || statusCode > 299 ? true : false;
     const timestamp = moment(date).format('YYYY-MM-DD');
-
     return next.handle().pipe(
       map(payload => ({
         statusCode,

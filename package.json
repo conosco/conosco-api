@@ -21,7 +21,8 @@
     "typeorm": "ts-node ./node_modules/.bin/typeorm"
   },
   "dependencies": {
-    "@nestjs/common": "^6.0.0",
+    "@nestjs/cli": "^6.5.0",
+    "@nestjs/common": "^6.3.1",
     "@nestjs/core": "^6.0.0",
     "@nestjs/jwt": "^6.0.0",
     "@nestjs/passport": "^6.0.0",

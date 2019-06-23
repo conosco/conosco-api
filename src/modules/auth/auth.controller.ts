@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Post,
-  UsePipes,
-  ValidationPipe,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
 import { LoginDTO } from './dto/auth.login-email.dto';
@@ -26,12 +19,6 @@ export class AuthController {
     private authService: AuthService,
   ) {}
 
-  @Post('login')
-  async login(@Body() userDTO: LoginDTO) {
-    const token = await this.authService.validateLogin(userDTO);
-    return token;
-  }
-
   @Post('register')
   async register(@Body() registerDTO: RegisterDTO) {
     const user = await this.userService.create(registerDTO);
@@ -48,4 +35,10 @@ export class AuthController {
 
   @Post('registerFacebook')
   async registerFacebook(@Body() token: RegisterFacebookDTO) {}
+
+  @Post('login')
+  async login(@Body() userDTO: LoginDTO) {
+    const token = await this.authService.validateLogin(userDTO);
+    return token;
+  }
 }

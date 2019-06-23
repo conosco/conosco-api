@@ -104,7 +104,7 @@ export class User extends BaseEntity {
   })
   rewards: Reward[];
 
-  @OneToMany(type => Topic, topic => topic.user)
+  @OneToMany(() => Topic, (topic: Topic) => topic.user)
   topics: Topic[];
 
   @OneToMany(type => Comment, comment => comment.user)
