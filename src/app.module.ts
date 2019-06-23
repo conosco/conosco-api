@@ -29,7 +29,7 @@ import { GroupController } from './modules/group/group.controller';
     VoteModule,
   ],
   controllers: [AppController, AuthController, UserController, GroupController],
-  providers: [AppService, AuthService],
+  providers: [AppService],
 })
 export class AppModule {
   constructor(private connection: Connection) {
