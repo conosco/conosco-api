@@ -11,10 +11,10 @@ import {
 import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
 import { GroupService } from './group.service';
 import { AuthGuard } from '@nestjs/passport';
-import { Messages } from '@kl/consts/messages/messages.portuguese';
+import { Messages } from '../../consts/messages/messages.portuguese';
 import { TopicDTO } from '../topic/dto/topic.dto';
 import { GroupDTO } from './dto/group.dto';
-import { ResponseTransformInterceptor } from '@kl/common/filters/response.pipe';
+import { ResponseTransformInterceptor } from '../../common/filters/response.pipe';
 
 @ApiUseTags('groups')
 // @ApiBearerAuth()

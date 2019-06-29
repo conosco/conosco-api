@@ -1,9 +1,9 @@
 import { Controller, UseInterceptors, UseGuards, Get, Param, Post, Body } from '@nestjs/common';
 import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
-import { ResponseTransformInterceptor } from '@kl/common/filters/response.pipe';
+import { ResponseTransformInterceptor } from '../../common/filters/response.pipe';
 import { AuthGuard } from '@nestjs/passport';
 import { HabitService } from './habit.service';
-import { Messages } from '@kl/consts/messages/messages.portuguese';
+import { Messages } from '../../consts/messages/messages.portuguese';
 import { HabitDTO } from './dto/habit.dto';
 
 @ApiUseTags('habit')

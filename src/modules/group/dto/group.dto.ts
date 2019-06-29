@@ -1,8 +1,8 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { IsString, IsUrl, IsArray, IsOptional } from 'class-validator';
 import { Messages } from '../../../consts/messages/messages.portuguese';
-import { IsNotBlank } from '@kl/common/pipes/validation/is-not-blank.validation';
-import { Habit } from '@kl/modules/habit/habit.entity';
+import { IsNotBlank } from '../../../common/pipes/validation/is-not-blank.validation';
+import { Habit } from '../../habit/habit.entity';
 
 export class GroupDTO {
   @ApiModelProperty()

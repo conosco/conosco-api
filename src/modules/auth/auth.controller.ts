@@ -6,8 +6,7 @@ import { UserService } from '../user/user.service';
 import { ApiUseTags } from '@nestjs/swagger';
 import { PayloadDTO } from './dto/auth.payload.dto';
 import { RegisterDTO } from './dto/auth.register.dto';
-import { RegisterFacebookDTO } from './dto/auth.register-facebook.dto';
-import { ResponseTransformInterceptor } from '@kl/common/filters/response.pipe';
+import { ResponseTransformInterceptor } from '../../common/filters/response.pipe';
 import { Messages } from '../../consts/messages/messages.portuguese';
 
 @Controller('auth')

@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Topic } from './topic.entity';
 import { Repository } from 'typeorm';
 import { TopicDTO } from './dto/topic.dto';
-import { User } from '../user/user.entity';
+import { TopicType } from './topic-type.entity';
 
 @Injectable()
   export class TopicService {
@@ -14,7 +14,7 @@ import { User } from '../user/user.entity';
       private readonly topicRepository: Repository<Topic>,
     ) {}
 
-    async findAll(groupId: number) {
+    async findAll() {
       return this.topicRepository.find({relations: ['user']});
     }
 

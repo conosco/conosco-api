@@ -6,7 +6,7 @@ import { TopicService } from './topic.service';
 import { UserModule } from '../user/user.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Topic, TopicType])],
+    imports: [TypeOrmModule.forFeature([Topic])],
     providers: [TopicService],
     exports: [TopicService],
 })

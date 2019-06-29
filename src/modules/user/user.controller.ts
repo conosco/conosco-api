@@ -2,7 +2,7 @@ import { Controller, Get, UseInterceptors, Body, Param } from '@nestjs/common';
 
 import { UserService } from '../user/user.service';
 import { ApiUseTags } from '@nestjs/swagger';
-import { ResponseTransformInterceptor } from '@kl/common/filters/response.pipe';
+import { ResponseTransformInterceptor } from '../../common/filters/response.pipe';
 
 @Controller('users')
 @ApiUseTags('users')

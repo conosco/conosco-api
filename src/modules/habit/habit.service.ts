@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Habit } from './habit.entity';
-import { Messages } from '@kl/consts/messages/messages.portuguese';
+import { Messages } from '../../consts/messages/messages.portuguese';
 import { HabitDTO } from './dto/habit.dto';
 
 @Injectable()
