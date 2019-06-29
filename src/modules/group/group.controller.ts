@@ -14,6 +14,7 @@ import { GroupService } from './group.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Messages } from '@kl/consts/messages/messages.portuguese';
 import { TopicDTO } from '../topic/dto/topic.dto';
+import { GroupDTO } from './dto/group.dto';
 
 @ApiUseTags('groups')
 @ApiBearerAuth()
@@ -28,6 +29,15 @@ export class GroupController {
     const groups = await this.groupService.findAll();
     await console.log(groups);
     return await { message: Messages.success.GROUPS_FIND_ALL_SUCESS, data: groups };
+  }
+
+  @Post()
+  async createGroup(@Body() groupDTO: GroupDTO) {
+    const group = await this.groupService.createGroup(groupDTO);
+    return {
+      message: Messages.success.GROUP_SAVE_SUCESS,
+      data: group,
+    };
   }
 
   @Get(':id')

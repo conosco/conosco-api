@@ -15,5 +15,6 @@ export const Messages = {
     GROUP_UNSUBSCRIBE_USER_SUCESS: 'Usuário desinscrito com sucesso!',
     GROUP_FIND_USERS_SUCESS: 'Membros encontrados com sucesso!',
     GROUP_FIND_TOPICS_SUCESS: 'Tópicos encontrados com sucesso!',
+    GROUP_SAVE_SUCESS: 'Grupo cadastrado com sucesso',
   },
 };

@@ -1,12 +1,14 @@
 import {
   Injectable,
   NotFoundException,
+  Body,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Group } from './group.entity';
 import { Repository } from 'typeorm';
 import { TopicDTO } from '../topic/dto/topic.dto';
 import { TopicService } from '../topic/topic.service';
+import { GroupDTO } from './dto/group.dto';
 
 @Injectable()
 export class GroupService {
@@ -81,5 +83,10 @@ export class GroupService {
     console.log(topicDTO);
     const topic = await this.topicService.createTopic(topicDTO);
     return topic;
+  }
+
+  async createGroup(GroupDTO: GroupDTO){
+    let group =  await this.groupRepository.create(GroupDTO);
+    return this.groupRepository.save(group);
   }
 }
