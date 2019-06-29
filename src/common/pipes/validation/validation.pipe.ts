@@ -27,7 +27,6 @@ export class ValidationPipe implements PipeTransform {
 
     const errors = await validate(object, { forbidUnknownValues: true });
     if (errors.length > 0) {
-      console.log(errors)
       throw new BadRequestException({ errors: this.formatErrors(errors) });
     }
     return value;

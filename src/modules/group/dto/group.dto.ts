@@ -23,6 +23,5 @@ export class GroupDTO {
   @ApiModelProperty({isArray: true, type: Habit})
   @IsArray()
   @IsOptional()
-  // @IsNotBlank(null, { message: Messages.error.EMPTY_FIELD })
   readonly habits: Array<Habit>;
 }

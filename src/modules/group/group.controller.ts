@@ -27,7 +27,6 @@ export class GroupController {
   @Get()
   async findAll() {
     const groups = await this.groupService.findAll();
-    await console.log(groups);
     return await { message: Messages.success.GROUPS_FIND_ALL_SUCESS, data: groups };
   }
 

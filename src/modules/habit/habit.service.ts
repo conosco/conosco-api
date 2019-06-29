@@ -18,9 +18,9 @@ export class HabitService {
     return habit;
   }
 
-  async findMany(habits: Habit[]) {
-    const habitsArray = await this.habitRepository.findByIds(habits); 
-    if (await habitsArray.length == 0 ){
+  async findByIds(habits: Habit[]) {
+    const habitsArray = await this.habitRepository.findByIds(habits);
+    if (await habitsArray.length === 0 ){
       throw new NotFoundException(Messages.error.NOT_FOUND);
     }
     return habitsArray;
@@ -33,7 +33,7 @@ export class HabitService {
 
   async findAll() {
       const habits = await this.habitRepository.find();
-      if (await habits.length == 0 ){
+      if (await habits.length === 0 ){
         throw new NotFoundException(Messages.error.NOT_FOUND);
       }
       return habits;

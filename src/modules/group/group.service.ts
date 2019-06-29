@@ -18,7 +18,7 @@ export class GroupService {
     @InjectRepository(Group)
     private readonly groupRepository: Repository<Group>,
     private topicService: TopicService,
-    private habitService: HabitService
+    private habitService: HabitService,
   ) {}
 
   async findAll() {
@@ -70,11 +70,7 @@ export class GroupService {
   }
 
   async findHabits(id: number) {
-      const group = await this.groupRepository
-        .createQueryBuilder('group')
-        .innerJoinAndSelect('group.habits', 'habit')
-        .where('group.id = :id', { id })
-        .getOne();
+    const group = this.groupRepository.find({where: {id}, loadEagerRelations: true})
       if (!group) {
         throw new NotFoundException(Messages.error.NOT_FOUND);
       }
@@ -90,12 +86,11 @@ export class GroupService {
   async create(groupDTO: GroupDTO){
     const group =  await this.groupRepository.create(groupDTO);
     try {
-      const habits = await this.habitService.findMany(groupDTO.habits);
-      group.habits = habits;      
+      const habits = await this.habitService.findByIds(groupDTO.habits);
+      group.habits = habits;
     } catch (error) {
       throw error;
-    } finally {
-      return this.groupRepository.save(group);
     }
+    return this.groupRepository.save(group);
   }
 }

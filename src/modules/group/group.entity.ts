@@ -47,7 +47,7 @@ export class Group extends BaseEntity {
   @OneToMany(() => Topic, (topic: Topic) => topic.group)
   topics: Topic[];
 
-  @ManyToMany(type => Habit, habit => habit.groups)
+  @ManyToMany(() => Habit, habit => habit.groups, {eager: true})
   @JoinTable({
     name: 'group_habit',
     joinColumn: {

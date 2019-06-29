@@ -76,7 +76,7 @@ export class User extends BaseEntity {
   })
   updatedAt: string;
 
-  @ManyToMany(type => Group, group => group.users)
+  @ManyToMany(type => Group, group => group.users, {eager: true})
   @JoinTable({
     name: 'user_group',
     joinColumn: {

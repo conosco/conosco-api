@@ -9,6 +9,6 @@ import { PassportModule } from '@nestjs/passport';
   imports: [TypeOrmModule.forFeature([Habit]), PassportModule.register({ defaultStrategy: 'jwt' })],
   providers: [HabitService],
   controllers: [HabitController],
-  exports: [HabitService]
+  exports: [HabitService],
 })
 export class HabitModule {}
