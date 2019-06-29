@@ -1,6 +1,5 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { IsNumber, IsString, IsOptional } from 'class-validator';
-import { User } from '@kl/modules/user/user.entity';
 
 export class TopicDTO {
   @ApiModelProperty()

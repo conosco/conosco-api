@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Habit } from './habit.entity';
 import { Messages } from '@kl/consts/messages/messages.portuguese';
+import { HabitDTO } from './dto/habit.dto';
 
 @Injectable()
 export class HabitService {
@@ -10,6 +11,16 @@ export class HabitService {
     @InjectRepository(Habit)
     private readonly habitRepository: Repository<Habit>,
   ) {}
+
+  async create(habitDTO: HabitDTO) {
+    const habit = await this.habitRepository.create(habitDTO);
+    await habit.save();
+    return habit;
+  }
+
+  async findMany(habits: Habit[]) {
+    return this.habitRepository.findByIds(habits); 
+  }
 
   async findOne(id: number) {
     const habit = await this.habitRepository.findOneOrFail(id);

@@ -1,9 +1,10 @@
-import { Controller, UseInterceptors, UseGuards, Get, Param } from '@nestjs/common';
+import { Controller, UseInterceptors, UseGuards, Get, Param, Post, Body } from '@nestjs/common';
 import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
 import { ResponseTransformInterceptor } from '@kl/common/filters/response.pipe';
 import { AuthGuard } from '@nestjs/passport';
 import { HabitService } from './habit.service';
 import { Messages } from '@kl/consts/messages/messages.portuguese';
+import { HabitDTO } from './dto/habit.dto';
 
 @ApiUseTags('habit')
 @ApiBearerAuth()
@@ -12,6 +13,15 @@ import { Messages } from '@kl/consts/messages/messages.portuguese';
 @UseGuards(AuthGuard())
 export class HabitController {
     constructor(private habitService: HabitService) {}
+
+    @Post()
+    async create(@Body() habitDTO: HabitDTO) {
+      const group = await this.habitService.create(habitDTO);
+      return {
+        message: Messages.success.GROUP_SAVE_SUCESS,
+        data: group,
+      };
+    }
 
   @Get()
   async findAll() {

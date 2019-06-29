@@ -9,24 +9,35 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
-import { ResponseTransformInterceptor } from '../../common/filters/response.pipe';
 import { GroupService } from './group.service';
 import { AuthGuard } from '@nestjs/passport';
-import { Messages } from '../../consts/messages/messages.portuguese';
+import { Messages } from '@kl/consts/messages/messages.portuguese';
 import { TopicDTO } from '../topic/dto/topic.dto';
+import { GroupDTO } from './dto/group.dto';
+import { ResponseTransformInterceptor } from '@kl/common/filters/response.pipe';
 
 @ApiUseTags('groups')
-@ApiBearerAuth()
+// @ApiBearerAuth()
 @Controller('groups')
 @UseInterceptors(ResponseTransformInterceptor)
-@UseGuards(AuthGuard())
+// @UseGuards(AuthGuard())
 export class GroupController {
   constructor(private groupService: GroupService) {}
 
   @Get()
   async findAll() {
     const groups = await this.groupService.findAll();
-    return { message: Messages.success.GROUPS_FIND_ALL_SUCESS, data: groups };
+    await console.log(groups);
+    return await { message: Messages.success.GROUPS_FIND_ALL_SUCESS, data: groups };
+  }
+
+  @Post()
+  async create(@Body() groupDTO: GroupDTO) {
+    const group = await this.groupService.create(groupDTO);
+    return {
+      message: Messages.success.GROUP_SAVE_SUCESS,
+      data: group,
+    };
   }
 
   @Get(':id')
@@ -78,7 +89,7 @@ export class GroupController {
   async findHabits(@Param('id') id: number) {
     const group = await this.groupService.findHabits(id);
     return {
-      message: Messages.success.GROUP_FIND_HABITS_SUCESS,
+      message: 'Habitos encontrados com sucesso',
       data: group,
     };
   }

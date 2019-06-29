@@ -10,6 +10,7 @@ import { TopicDTO } from '../topic/dto/topic.dto';
 import { TopicService } from '../topic/topic.service';
 import { GroupDTO } from './dto/group.dto';
 import { Messages } from '../../consts/messages/messages.portuguese';
+import { HabitService } from '../habit/habit.service';
 
 @Injectable()
 export class GroupService {
@@ -17,14 +18,15 @@ export class GroupService {
     @InjectRepository(Group)
     private readonly groupRepository: Repository<Group>,
     private topicService: TopicService,
+    private habitService: HabitService
   ) {}
 
   async findAll() {
     return this.groupRepository.find();
   }
 
-  async findOne(id: number) {
-    return this.groupRepository.findOneOrFail(id);
+  async findOne(arg: any) {
+    return this.groupRepository.findOneOrFail(arg);
   }
 
   async subscribeUser(id: number, userId: number) {
@@ -85,8 +87,12 @@ export class GroupService {
     return topic;
   }
 
-  async createGroup(groupDTO: GroupDTO){
+  async create(groupDTO: GroupDTO){
+    console.log(groupDTO);
     const group =  await this.groupRepository.create(groupDTO);
+    const habits = await this.habitService.findMany(groupDTO.habits);
+    group.habits = habits;
+    console.log(habits);
     return this.groupRepository.save(group);
   }
 }
