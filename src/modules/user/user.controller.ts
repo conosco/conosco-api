@@ -8,8 +8,7 @@ import {
 
 import { UserService } from '../user/user.service';
 import { ApiUseTags } from '@nestjs/swagger';
-import { ResponseTransformInterceptor } from '@kl/common/pipes/interceptors/response.pipe';
-import { UserDTO } from './dto/user.dto';
+import { ResponseTransformInterceptor } from '@kl/common/filters/response.pipe';
 
 @Controller('users')
 @ApiUseTags('users')
@@ -24,7 +23,7 @@ export class UserController {
         const users = await this.userService.getUsers();
         return {
             message: 'Usuários recuperados com sucesso!',
-            data: users
+            data: users,
         };
     }
 
@@ -34,7 +33,7 @@ export class UserController {
 
         return {
             message: 'Usuário recuperado com sucesso!',
-            data: user
+            data: user,
         };
     }
 }

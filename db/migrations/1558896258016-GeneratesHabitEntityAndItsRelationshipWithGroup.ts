@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import {MigrationInterface, QueryRunner} from 'typeorm';
 
 export class GeneratesHabitEntityAndItsRelationshipWithGroup1558896258016 implements MigrationInterface {
 

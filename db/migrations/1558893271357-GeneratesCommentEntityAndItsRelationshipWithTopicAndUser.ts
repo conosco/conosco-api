@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import {MigrationInterface, QueryRunner} from 'typeorm';
 
 export class GeneratesCommentEntityAndItsRelationshipWithTopicAndUser1558893271357 implements MigrationInterface {
 

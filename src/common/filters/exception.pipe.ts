@@ -3,7 +3,6 @@ import {
   Catch,
   ArgumentsHost,
   Logger,
-  HttpException,
   HttpStatus,
   UseInterceptors,
 } from '@nestjs/common';
@@ -11,7 +10,7 @@ import {
 import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
 import * as moment from 'moment';
 import { ResponseTransformInterceptor } from './response.pipe';
-import { ResponseDTO } from '../dto/response.dto';
+import { ResponseDTO } from './dto/response.dto';
 
 @Catch()
 @UseInterceptors(ResponseTransformInterceptor)

@@ -7,7 +7,7 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
-import { ResponseDTO } from '../dto/response.dto';
+import { ResponseDTO } from './dto/response.dto';
 
 @Injectable()
 export class ResponseTransformInterceptor<T>

@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import {MigrationInterface, QueryRunner} from 'typeorm';
 
 export class AddsIconUrlColumnAtRewardAndGroupTable1558889711797 implements MigrationInterface {
 

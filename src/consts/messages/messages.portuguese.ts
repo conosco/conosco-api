@@ -16,5 +16,8 @@ export const Messages = {
     GROUP_FIND_USERS_SUCESS: 'Membros encontrados com sucesso!',
     GROUP_FIND_TOPICS_SUCESS: 'Tópicos encontrados com sucesso!',
     GROUP_SAVE_SUCESS: 'Grupo cadastrado com sucesso',
+    GROUP_FIND_HABITS_SUCESS: 'Habitos encontrados com sucesso',
+    HABIT_FIND_ALL_SUCESS: 'Habitos encontrados com sucesso',
+    HABIT_FIND_ONE_SUCESS: 'Hábito encontrado com sucesso',
   },
 };

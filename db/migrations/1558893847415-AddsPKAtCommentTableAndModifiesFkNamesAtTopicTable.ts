@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import {MigrationInterface, QueryRunner} from 'typeorm';
 
 export class AddsPKAtCommentTableAndModifiesFkNamesAtTopicTable1558893847415 implements MigrationInterface {
 

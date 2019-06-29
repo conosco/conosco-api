@@ -7,7 +7,7 @@ import { ApiUseTags } from '@nestjs/swagger';
 import { PayloadDTO } from './dto/auth.payload.dto';
 import { RegisterDTO } from './dto/auth.register.dto';
 import { RegisterFacebookDTO } from './dto/auth.register-facebook.dto';
-import { ResponseTransformInterceptor } from '@kl/common/pipes/interceptors/response.pipe';
+import { ResponseTransformInterceptor } from '@kl/common/filters/response.pipe';
 import { Messages } from '../../consts/messages/messages.portuguese';
 
 @Controller('auth')
@@ -32,9 +32,6 @@ export class AuthController {
     const data = await { token };
     return { data, message: Messages.success.REGISTER_SUCCESS };
   }
-
-  @Post('registerFacebook')
-  async registerFacebook(@Body() token: RegisterFacebookDTO) {}
 
   @Post('login')
   async login(@Body() userDTO: LoginDTO) {

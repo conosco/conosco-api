@@ -5,9 +5,9 @@ import { TopicType } from './topic-type.entity';
 import { TopicService } from './topic.service';
 import { UserModule } from '../user/user.module';
 
-@Module({ 
-    imports: [TypeOrmModule.forFeature([Topic, TopicType])],   
+@Module({
+    imports: [TypeOrmModule.forFeature([Topic, TopicType])],
     providers: [TopicService],
-    exports: [TopicService] 
+    exports: [TopicService],
 })
 export class TopicModule {}

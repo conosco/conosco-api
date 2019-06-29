@@ -22,7 +22,7 @@ export class TopicDTO {
   @ApiModelProperty()
   @IsString()
   imageUrl: string;
-  
+
   @IsNumber()
   @IsOptional()
   groupId: number;

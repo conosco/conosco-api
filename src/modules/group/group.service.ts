@@ -15,7 +15,7 @@ export class GroupService {
   constructor(
     @InjectRepository(Group)
     private readonly groupRepository: Repository<Group>,
-    private topicService: TopicService
+    private topicService: TopicService,
   ) {}
 
   async findAll() {
@@ -31,7 +31,7 @@ export class GroupService {
       .createQueryBuilder()
       .relation(Group, 'users')
       .of(id)
-      .add(userId);      
+      .add(userId);
     const subscribedUser = await this.groupRepository
     .createQueryBuilder('group')
     .innerJoinAndSelect('group.users', 'user')
@@ -76,17 +76,16 @@ export class GroupService {
         throw new NotFoundException('Não encontrado.');
       }
       return group;
-  }  
-  
+  }
+
   async createTopic(id: number, topicDTO: TopicDTO) {
     topicDTO.groupId = Number(id);
-    console.log(topicDTO);
     const topic = await this.topicService.createTopic(topicDTO);
     return topic;
   }
 
-  async createGroup(GroupDTO: GroupDTO){
-    let group =  await this.groupRepository.create(GroupDTO);
+  async createGroup(groupDTO: GroupDTO){
+    const group =  await this.groupRepository.create(groupDTO);
     return this.groupRepository.save(group);
   }
 }
