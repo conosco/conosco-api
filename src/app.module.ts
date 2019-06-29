@@ -15,6 +15,7 @@ import { RewardModule } from './modules/reward/reward.module';
 import { VoteModule } from './modules/vote/vote.module';
 import { UserController } from './modules/user/user.controller';
 import { GroupController } from './modules/group/group.controller';
+import { HabitController } from './modules/habit/habit.controller';
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { GroupController } from './modules/group/group.controller';
     RewardModule,
     VoteModule,
   ],
-  controllers: [AppController, AuthController, UserController, GroupController],
+  controllers: [AppController, AuthController, UserController, GroupController, HabitController],
   providers: [AppService, AuthService],
 })
 export class AppModule {

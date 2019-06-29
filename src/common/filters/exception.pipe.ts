@@ -44,7 +44,7 @@ export class ExceptionInterceptor implements ExceptionFilter {
       method: request.method,
       message:
         statusCode !== HttpStatus.INTERNAL_SERVER_ERROR
-          ? exception.message.error || exception.message || null
+          ? exception.response.message || exception.message.error || 'Something bad happened'
           : 'Internal server error',
       data,
     };
@@ -54,7 +54,6 @@ export class ExceptionInterceptor implements ExceptionFilter {
         errorResponse.message,
       )}`,
       null,
-      'ExceptionHttpFilter',
     );
 
     Logger.error('Error', exception.stack, 'ExceptionHttpFilter');

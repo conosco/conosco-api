@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import { TopicDTO } from '../topic/dto/topic.dto';
 import { TopicService } from '../topic/topic.service';
 import { GroupDTO } from './dto/group.dto';
+import { Messages } from '../../consts/messages/messages.portuguese';
 
 @Injectable()
 export class GroupService {
@@ -53,7 +54,7 @@ export class GroupService {
   async findUsers(id: number) {
     const group = await this.groupRepository.find({where: {id}, relations: ['users'], select: ['users']});
     if (!group) {
-      throw new NotFoundException('Não encontrado.');
+      throw new NotFoundException(Messages.error.NOT_FOUND);
     }
     return group;
   }
@@ -61,7 +62,7 @@ export class GroupService {
   async findTopics(id: number) {
     const groupWithTopics = await this.groupRepository.find({where: {id}, relations: ['topics', 'topics.user', 'topics.type']});
     if (!groupWithTopics) {
-      throw new NotFoundException('Não encontrado.');
+      throw new NotFoundException(Messages.error.NOT_FOUND);
     }
     return groupWithTopics;
   }
@@ -73,7 +74,7 @@ export class GroupService {
         .where('group.id = :id', { id })
         .getOne();
       if (!group) {
-        throw new NotFoundException('Não encontrado.');
+        throw new NotFoundException(Messages.error.NOT_FOUND);
       }
       return group;
   }

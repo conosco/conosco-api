@@ -5,6 +5,7 @@ export const Messages = {
     EMPTY_BODY: 'O corpo da requisição está vazio',
     EMPTY_FIELD: 'Este campo não pode ser vazio',
     INVALID_FORMAT: 'Formato inválido',
+    NOT_FOUND: 'Não encontrado'
   },
   success: {
     REGISTER_SUCCESS: 'Cadastro realizado com sucesso!',

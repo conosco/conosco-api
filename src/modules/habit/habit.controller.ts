@@ -5,9 +5,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { HabitService } from './habit.service';
 import { Messages } from '@kl/consts/messages/messages.portuguese';
 
-@Controller('habit')
 @ApiUseTags('habit')
 @ApiBearerAuth()
+@Controller('habit')
 @UseInterceptors(ResponseTransformInterceptor)
 @UseGuards(AuthGuard())
 export class HabitController {
