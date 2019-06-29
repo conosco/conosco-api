@@ -19,7 +19,11 @@ export class HabitService {
   }
 
   async findMany(habits: Habit[]) {
-    return this.habitRepository.findByIds(habits); 
+    const habitsArray = await this.habitRepository.findByIds(habits); 
+    if (await habitsArray.length == 0 ){
+      throw new NotFoundException(Messages.error.NOT_FOUND);
+    }
+    return habitsArray;
   }
 
   async findOne(id: number) {

@@ -88,11 +88,14 @@ export class GroupService {
   }
 
   async create(groupDTO: GroupDTO){
-    console.log(groupDTO);
     const group =  await this.groupRepository.create(groupDTO);
-    const habits = await this.habitService.findMany(groupDTO.habits);
-    group.habits = habits;
-    console.log(habits);
-    return this.groupRepository.save(group);
+    try {
+      const habits = await this.habitService.findMany(groupDTO.habits);
+      group.habits = habits;      
+    } catch (error) {
+      throw error;
+    } finally {
+      return this.groupRepository.save(group);
+    }
   }
 }
