@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  Body,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, Body } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Group } from './group.entity';
 import { Repository } from 'typeorm';
@@ -36,11 +32,11 @@ export class GroupService {
       .of(id)
       .add(userId);
     const subscribedUser = await this.groupRepository
-    .createQueryBuilder('group')
-    .innerJoinAndSelect('group.users', 'user')
-    .where('group.id = :id', { id })
-    .where('user.id = :userId', { userId })
-    .getOne();
+      .createQueryBuilder('group')
+      .innerJoinAndSelect('group.users', 'user')
+      .where('group.id = :id', { id })
+      .where('user.id = :userId', { userId })
+      .getOne();
     return subscribedUser;
   }
 
@@ -54,7 +50,11 @@ export class GroupService {
   }
 
   async findUsers(id: number) {
-    const group = await this.groupRepository.find({where: {id}, relations: ['users'], select: ['users']});
+    const group = await this.groupRepository.find({
+      where: { id },
+      relations: ['users'],
+      select: ['users'],
+    });
     if (!group) {
       throw new NotFoundException(Messages.error.NOT_FOUND);
     }
@@ -62,7 +62,10 @@ export class GroupService {
   }
 
   async findTopics(id: number) {
-    const groupWithTopics = await this.groupRepository.find({where: {id}, relations: ['topics', 'topics.user', 'topics.type']});
+    const groupWithTopics = await this.groupRepository.find({
+      where: { id },
+      relations: ['topics', 'topics.user', 'topics.type'],
+    });
     if (!groupWithTopics) {
       throw new NotFoundException(Messages.error.NOT_FOUND);
     }
@@ -70,11 +73,14 @@ export class GroupService {
   }
 
   async findHabits(id: number) {
-    const group = this.groupRepository.find({where: {id}, loadEagerRelations: true})
-      if (!group) {
-        throw new NotFoundException(Messages.error.NOT_FOUND);
-      }
-      return group;
+    const group = this.groupRepository.find({
+      where: { id },
+      loadEagerRelations: true,
+    });
+    if (!group) {
+      throw new NotFoundException(Messages.error.NOT_FOUND);
+    }
+    return group;
   }
 
   async createTopic(id: number, topicDTO: TopicDTO) {
@@ -83,13 +89,11 @@ export class GroupService {
     return topic;
   }
 
-  async create(groupDTO: GroupDTO){
-    const group =  await this.groupRepository.create(groupDTO);
-    try {
+  async create(groupDTO: GroupDTO) {
+    const group = await this.groupRepository.create(groupDTO);
+    if (groupDTO.habits != null){
       const habits = await this.habitService.findByIds(groupDTO.habits);
       group.habits = habits;
-    } catch (error) {
-      throw error;
     }
     return this.groupRepository.save(group);
   }
