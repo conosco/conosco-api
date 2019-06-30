@@ -24,8 +24,7 @@ import { VoteModule } from './modules/vote/vote.module';
     HabitModule,
     RewardModule,
     VoteModule,
-  ],
-  providers: [AppService, AuthService],
+  ]
 })
 export class AppModule {
   constructor(private connection: Connection) {
