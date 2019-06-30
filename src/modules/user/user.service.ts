@@ -50,7 +50,7 @@ export class UserService {
   }
 
   async getGroups(id: number) {
-    const user = await this.userRepository.findOne({where: {id}, relations: ['groups']});    
+    const user = await this.userRepository.findOne({where: {id}, relations: ['groups']});
     return user;
   }
 }

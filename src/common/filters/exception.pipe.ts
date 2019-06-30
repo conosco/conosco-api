@@ -56,8 +56,6 @@ export class ExceptionInterceptor implements ExceptionFilter {
       null,
     );
 
-    console.log(exception)
-
     return response.status(statusCode).json(errorResponse);
   }
 }

@@ -62,7 +62,7 @@ export class GroupService {
   }
 
   async findTopics(id: number) {
-    const groupWithTopics = await this.groupRepository.find({
+    const groupWithTopics = await this.groupRepository.findOne({
       where: { id },
       relations: ['topics', 'topics.user', 'topics.type'],
     });
