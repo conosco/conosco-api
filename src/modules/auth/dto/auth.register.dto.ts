@@ -1,7 +1,7 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { IsString, IsEmail, IsOptional } from 'class-validator';
 import { Messages } from '../../../consts/messages/messages.portuguese';
-import { IsNotBlank } from '@kl/common/pipes/validation/is-not-blank.validation';
+import { IsNotBlank } from '../../../common/pipes/validation/is-not-blank.validation';
 
 export class RegisterDTO {
   @ApiModelProperty()

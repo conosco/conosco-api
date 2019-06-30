@@ -1,10 +1,9 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import { IsString, IsUrl, IsArray, IsOptional } from 'class-validator';
+import { IsString } from 'class-validator';
 import { Messages } from '../../../consts/messages/messages.portuguese';
 import { IsNotBlank } from '../../../common/pipes/validation/is-not-blank.validation';
-import { Habit } from '../../habit/habit.entity';
 
-export class GroupDTO {
+export class HabitDTO {
   @ApiModelProperty()
   @IsString({ message: Messages.error.INVALID_FORMAT })
   @IsNotBlank(null, { message: Messages.error.EMPTY_FIELD })
@@ -19,9 +18,4 @@ export class GroupDTO {
   @IsString({ message: Messages.error.INVALID_FORMAT })
   @IsNotBlank(null, { message: Messages.error.EMPTY_FIELD })
   readonly iconUrl: string;
-
-  @ApiModelProperty({isArray: true, type: Habit})
-  @IsArray()
-  @IsOptional()
-  readonly habits: Array<Habit>;
 }

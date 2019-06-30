@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import {MigrationInterface, QueryRunner} from 'typeorm';
 
 export class GeneratesVoteAndItsRelationships1558898065714 implements MigrationInterface {
 

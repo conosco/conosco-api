@@ -5,6 +5,7 @@ export const Messages = {
     EMPTY_BODY: 'O corpo da requisição está vazio',
     EMPTY_FIELD: 'Este campo não pode ser vazio',
     INVALID_FORMAT: 'Formato inválido',
+    NOT_FOUND: 'Não encontrado',
   },
   success: {
     REGISTER_SUCCESS: 'Cadastro realizado com sucesso!',
@@ -16,5 +17,8 @@ export const Messages = {
     GROUP_FIND_USERS_SUCESS: 'Membros encontrados com sucesso!',
     GROUP_FIND_TOPICS_SUCESS: 'Tópicos encontrados com sucesso!',
     GROUP_SAVE_SUCESS: 'Grupo cadastrado com sucesso',
+    GROUP_FIND_HABITS_SUCESS: 'Habitos encontrados com sucesso',
+    HABIT_FIND_ALL_SUCESS: 'Habitos encontrados com sucesso',
+    HABIT_FIND_ONE_SUCESS: 'Hábito encontrado com sucesso',
   },
 };

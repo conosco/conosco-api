@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import {MigrationInterface, QueryRunner} from 'typeorm';
 
 export class GeneratesRewardTypeAndItsRelationships1558899009882 implements MigrationInterface {
 

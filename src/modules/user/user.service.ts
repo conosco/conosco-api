@@ -48,4 +48,9 @@ export class UserService {
     const user = await this.userRepository.findOneOrFail(id);
     return user;
   }
+
+  async getGroups(id: number) {
+    const user = await this.userRepository.findOne({where: {id}, relations: ['groups']});    
+    return user;
+  }
 }
