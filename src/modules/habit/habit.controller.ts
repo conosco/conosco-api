@@ -7,10 +7,10 @@ import { Messages } from '../../consts/messages/messages.portuguese';
 import { HabitDTO } from './dto/habit.dto';
 
 @ApiUseTags('habit')
-@ApiBearerAuth()
+// @ApiBearerAuth()
 @Controller('habit')
 @UseInterceptors(ResponseTransformInterceptor)
-@UseGuards(AuthGuard())
+// @UseGuards(AuthGuard())
 export class HabitController {
     constructor(private habitService: HabitService) {}
 
