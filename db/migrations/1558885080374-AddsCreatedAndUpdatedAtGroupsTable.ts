@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import {MigrationInterface, QueryRunner} from 'typeorm';
 
 export class AddsCreatedAndUpdatedAtGroupsTable1558885080374 implements MigrationInterface {
 

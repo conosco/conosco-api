@@ -9,25 +9,34 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
-import { ResponseTransformInterceptor } from '@kl/common/pipes/interceptors/response.pipe';
 import { GroupService } from './group.service';
 import { AuthGuard } from '@nestjs/passport';
-import { Messages } from '@kl/consts/messages/messages.portuguese';
+import { Messages } from '../../consts/messages/messages.portuguese';
 import { TopicDTO } from '../topic/dto/topic.dto';
+import { GroupDTO } from './dto/group.dto';
+import { ResponseTransformInterceptor } from '../../common/filters/response.pipe';
 
 @ApiUseTags('groups')
-@ApiBearerAuth()
+// @ApiBearerAuth()
 @Controller('groups')
 @UseInterceptors(ResponseTransformInterceptor)
-@UseGuards(AuthGuard())
+// @UseGuards(AuthGuard())
 export class GroupController {
   constructor(private groupService: GroupService) {}
 
   @Get()
   async findAll() {
     const groups = await this.groupService.findAll();
-    await console.log(groups);
     return await { message: Messages.success.GROUPS_FIND_ALL_SUCESS, data: groups };
+  }
+
+  @Post()
+  async create(@Body() groupDTO: GroupDTO) {
+    const group = await this.groupService.create(groupDTO);
+    return {
+      message: Messages.success.GROUP_SAVE_SUCESS,
+      data: group,
+    };
   }
 
   @Get(':id')

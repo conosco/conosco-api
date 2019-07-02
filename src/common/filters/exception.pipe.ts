@@ -3,7 +3,6 @@ import {
   Catch,
   ArgumentsHost,
   Logger,
-  HttpException,
   HttpStatus,
   UseInterceptors,
 } from '@nestjs/common';
@@ -11,7 +10,7 @@ import {
 import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
 import * as moment from 'moment';
 import { ResponseTransformInterceptor } from './response.pipe';
-import { ResponseDTO } from '../dto/response.dto';
+import { ResponseDTO } from './dto/response.dto';
 
 @Catch()
 @UseInterceptors(ResponseTransformInterceptor)
@@ -45,7 +44,7 @@ export class ExceptionInterceptor implements ExceptionFilter {
       method: request.method,
       message:
         statusCode !== HttpStatus.INTERNAL_SERVER_ERROR
-          ? exception.message.error || exception.message || null
+          ? exception.response.message || exception.message.error || exception.message || 'Something bad happened'
           : 'Internal server error',
       data,
     };
@@ -55,10 +54,7 @@ export class ExceptionInterceptor implements ExceptionFilter {
         errorResponse.message,
       )}`,
       null,
-      'ExceptionHttpFilter',
     );
-
-    Logger.error('Error', exception.stack, 'ExceptionHttpFilter');
 
     return response.status(statusCode).json(errorResponse);
   }

@@ -8,7 +8,6 @@ import {
   OneToMany,
   ManyToOne,
   JoinColumn,
-  RelationId,
 } from 'typeorm';
 import { User } from '../user/user.entity';
 import { Group } from '../group/group.entity';

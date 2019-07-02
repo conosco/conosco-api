@@ -6,15 +6,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AuthService } from './modules/auth/auth.service';
-import { AuthController } from './modules/auth/auth.controller';
 import { GroupModule } from './modules/group/group.module';
 import { TopicModule } from './modules/topic/topic.module';
 import { CommentModule } from './modules/comment/comment.module';
 import { HabitModule } from './modules/habit/habit.module';
 import { RewardModule } from './modules/reward/reward.module';
 import { VoteModule } from './modules/vote/vote.module';
-import { UserController } from './modules/user/user.controller';
-import { GroupController } from './modules/group/group.controller';
 
 @Module({
   imports: [
@@ -28,8 +25,6 @@ import { GroupController } from './modules/group/group.controller';
     RewardModule,
     VoteModule,
   ],
-  controllers: [AppController, AuthController, UserController, GroupController],
-  providers: [AppService, AuthService],
 })
 export class AppModule {
   constructor(private connection: Connection) {

@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import {MigrationInterface, QueryRunner} from 'typeorm';
 
 export class ModifiesColumnsNamesAtUserGroupJoinTable1558884455546 implements MigrationInterface {
 

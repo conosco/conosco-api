@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import {MigrationInterface, QueryRunner} from 'typeorm';
 
 export class GeneratesTopicEntityAndItsRelationshipsWithGroupAndUser1558891639164 implements MigrationInterface {
 
