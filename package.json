@@ -42,7 +42,7 @@
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",
     "swagger-ui-express": "^4.0.2",
-    "typeorm": "^0.2.16",
+    "typeorm": "^0.2.25",
     "validate.js": "^0.12.0"
   },
   "devDependencies": {
